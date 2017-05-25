@@ -6,7 +6,7 @@ namespace Tampleworks.WindowsApplicationBlock.ViewModel
     public interface IApplicationLogicAgent
     {
         string Arguments { get; }
-        IExtendedExecutionManager ExtendedExecutionManager { get; }
+        IExtendedExecutionSessionFactory ExtendedExecutionSessionFactory { get; }
         /// <summary>
         /// It is recommended to save state from here asynchronously.
         /// </summary>

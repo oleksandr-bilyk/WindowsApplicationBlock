@@ -110,7 +110,7 @@
     <Compile Include="ApplicationLogicAgent.cs" />
     <Compile Include="ApplicationLogicContext.cs" />
     <Compile Include="ApplicationManager.cs" />
-    <Compile Include="ExtendedExecutionManager.cs" />
+    <Compile Include="ExtendedExecutionSessionFactory.cs" />
     <Compile Include="NavigateFramePageHandler.cs" />
     <Compile Include="OpenNewViewAsyncHandler.cs" />
     <Compile Include="PageNavitedToParameters.cs" />

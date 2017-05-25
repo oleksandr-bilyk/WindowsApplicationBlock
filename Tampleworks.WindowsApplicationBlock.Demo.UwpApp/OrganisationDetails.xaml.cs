@@ -24,5 +24,13 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.UwpApp
                 Bindings.Update();
             }
         }
+
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (model != null)
+            {
+                await model.ReportGeneration.ObserverReportGeneration();
+            }
+        }
     }
 }

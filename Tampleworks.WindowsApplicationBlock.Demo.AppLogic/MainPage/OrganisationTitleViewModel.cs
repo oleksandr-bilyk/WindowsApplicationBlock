@@ -9,11 +9,16 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage
         private IViewModelDataProvider viewModelDataProvider;
         private bool isFavorite;
 
-        public OrganisationTitleViewModel(OrganisationTitle item, IViewModelDataProvider viewModelDataProvider)
+        public OrganisationTitleViewModel(
+            IWindowFrameControllerAgent viewAgent,
+            OrganisationTitle item, 
+            IViewModelDataProvider viewModelDataProvider
+        )
         {
             this.Data = item;
             this.viewModelDataProvider = viewModelDataProvider;
-            Details = new OrganisationDetailsViewModel();
+            Details = new OrganisationDetailsViewModel(
+                item.OrganisationId, viewAgent, viewModelDataProvider);
             Details.IsFavoriteChanged += Details_IsFavoriteChanged;
         }
 

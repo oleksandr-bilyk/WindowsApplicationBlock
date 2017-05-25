@@ -18,7 +18,7 @@ namespace Tampleworks.WindowsApplicationBlock.WindowsUniversalView
         private readonly Func<IApplicationLogicFactory> getApplicationLogicFactory;
         private readonly Application application;
         private readonly Func<Guid, Type> getPageTypeByPageId;
-        private readonly ExtendedExecutionManager extendedExecutionManager;
+        private readonly ExtendedExecutionSessionFactory extendedExecutionManager;
         private ApplicationLogicContext applicationLogicContext;
         private bool isInBackgroundMode = true;
         private readonly ConcurrentQueue<TaskCompletionSource<Window>> taskWrappers = new ConcurrentQueue<TaskCompletionSource<Window>>();
@@ -33,7 +33,7 @@ namespace Tampleworks.WindowsApplicationBlock.WindowsUniversalView
             Func<Guid, Type> getPageTypeByPageId
         )
         {
-            extendedExecutionManager = new ExtendedExecutionManager();
+            extendedExecutionManager = new ExtendedExecutionSessionFactory();
             this.getApplicationLogicFactory = getApplicationLogicFactory;
             this.application = application;
             this.getPageTypeByPageId = getPageTypeByPageId;

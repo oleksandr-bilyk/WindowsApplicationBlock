@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tampleworks.WindowsApplicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tampleworks.WindowsApplicationBlock.WindowsUniversalView", "Tampleworks.WindowsApplicationBlock.WindowsUniversalView\Tampleworks.WindowsApplicationBlock.WindowsUniversalView.csproj", "{7D6ADA7B-EA96-4502-8161-8A25BB9BDB17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tampleworks.WindowsApplicationBlock.Demo.UwpApp", "Tampleworks.WindowsApplicationBlock.Demo.UwpApp\Tampleworks.WindowsApplicationBlock.Demo.UwpApp.csproj", "{96605883-951C-4FB4-BDDB-C01EB48A48EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tampleworks.WindowsApplicationBlock.Demo.UwpApp", "Tampleworks.WindowsApplicationBlock.Demo.UwpApp\Tampleworks.WindowsApplicationBlock.Demo.UwpApp.csproj", "{547FC546-E50F-4487-92F0-54F0982105F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,26 +71,28 @@ Global
 		{7D6ADA7B-EA96-4502-8161-8A25BB9BDB17}.Release|x64.Build.0 = Release|x64
 		{7D6ADA7B-EA96-4502-8161-8A25BB9BDB17}.Release|x86.ActiveCfg = Release|x86
 		{7D6ADA7B-EA96-4502-8161-8A25BB9BDB17}.Release|x86.Build.0 = Release|x86
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Debug|ARM.ActiveCfg = Debug|ARM
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Debug|ARM.Build.0 = Debug|ARM
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Debug|ARM.Deploy.0 = Debug|ARM
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Debug|x64.ActiveCfg = Debug|x64
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Debug|x64.Build.0 = Debug|x64
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Debug|x64.Deploy.0 = Debug|x64
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Debug|x86.ActiveCfg = Debug|x86
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Debug|x86.Build.0 = Debug|x86
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Debug|x86.Deploy.0 = Debug|x86
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Release|Any CPU.ActiveCfg = Release|x86
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Release|ARM.ActiveCfg = Release|ARM
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Release|ARM.Build.0 = Release|ARM
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Release|ARM.Deploy.0 = Release|ARM
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Release|x64.ActiveCfg = Release|x64
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Release|x64.Build.0 = Release|x64
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Release|x64.Deploy.0 = Release|x64
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Release|x86.ActiveCfg = Release|x86
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Release|x86.Build.0 = Release|x86
-		{96605883-951C-4FB4-BDDB-C01EB48A48EA}.Release|x86.Deploy.0 = Release|x86
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Debug|Any CPU.Build.0 = Debug|x86
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Debug|Any CPU.Deploy.0 = Debug|x86
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Debug|ARM.ActiveCfg = Debug|ARM
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Debug|ARM.Build.0 = Debug|ARM
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Debug|ARM.Deploy.0 = Debug|ARM
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Debug|x64.ActiveCfg = Debug|x64
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Debug|x64.Build.0 = Debug|x64
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Debug|x64.Deploy.0 = Debug|x64
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Debug|x86.ActiveCfg = Debug|x86
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Debug|x86.Build.0 = Debug|x86
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Debug|x86.Deploy.0 = Debug|x86
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Release|Any CPU.ActiveCfg = Release|x86
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Release|ARM.ActiveCfg = Release|ARM
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Release|ARM.Build.0 = Release|ARM
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Release|ARM.Deploy.0 = Release|ARM
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Release|x64.ActiveCfg = Release|x64
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Release|x64.Build.0 = Release|x64
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Release|x64.Deploy.0 = Release|x64
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Release|x86.ActiveCfg = Release|x86
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Release|x86.Build.0 = Release|x86
+		{547FC546-E50F-4487-92F0-54F0982105F2}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

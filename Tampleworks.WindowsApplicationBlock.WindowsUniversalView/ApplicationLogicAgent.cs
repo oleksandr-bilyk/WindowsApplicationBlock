@@ -10,17 +10,17 @@ namespace Tampleworks.WindowsApplicationBlock.WindowsUniversalView
 
         public ApplicationLogicAgent(
             string arguments,
-            ExtendedExecutionManager extendedExecutionManager,
+            ExtendedExecutionSessionFactory extendedExecutionManager,
             Func<Task> disposeViewAsync
         )
         {
             Arguments = arguments;
-            ExtendedExecutionManager = extendedExecutionManager;
+            ExtendedExecutionSessionFactory = extendedExecutionManager;
             this.disposeViewAsync = disposeViewAsync;
         }
 
         public string Arguments { get; }
-        public IExtendedExecutionManager ExtendedExecutionManager { get; }
+        public IExtendedExecutionSessionFactory ExtendedExecutionSessionFactory { get; }
 
         public event Action EnteredBackground;
         public event Action LeavingBackground;

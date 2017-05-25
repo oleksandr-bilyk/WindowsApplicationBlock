@@ -81,7 +81,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
         public IWindowFrameController GetWindowFrameController(IWindowFrameControllerAgent agent)
             =>  new ApplicationMainWindowFrameController(
                 agent, 
-                new ViewModelDataProvider(memoryController, applicationAgent.ExtendedExecutionManager),
+                new ViewModelDataProvider(memoryController, applicationAgent.ExtendedExecutionSessionFactory),
                 applicationAgent
             );
     }

@@ -22,7 +22,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage
         {
             this.viewAgent = viewAgent;
             this.viewModelDataProvider = viewModelDataProvider;
-            this.ItemCollection = (from item in organisationList select new OrganisationTitleViewModel(item, viewModelDataProvider)).ToList();
+            this.ItemCollection = (from item in organisationList select new OrganisationTitleViewModel(viewAgent, item, viewModelDataProvider)).ToList();
             itemSelected = ItemCollection.FirstOrDefault();
         }
 

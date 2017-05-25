@@ -7,14 +7,14 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="0011bf4a-1e9c-4876-a6da-272856b8d8f0"
+    Name="0a5165f5-c7c7-40e5-8f22-b24ec4f2a3c1"
     Publisher="CN=oleks"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="0011bf4a-1e9c-4876-a6da-272856b8d8f0" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="0a5165f5-c7c7-40e5-8f22-b24ec4f2a3c1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Tampleworks.UwpDemo</DisplayName>
+    <DisplayName>Tampleworks.WindowsApplicationBlock.Demo.UwpApp</DisplayName>
     <PublisherDisplayName>oleks</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -30,12 +30,12 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="Tampleworks.UwpDemo.App">
+      EntryPoint="Tampleworks.WindowsApplicationBlock.Demo.UwpApp.App">
       <uap:VisualElements
-        DisplayName="Tampleworks.UwpDemo"
+        DisplayName="Tampleworks.WindowsApplicationBlock.Demo.UwpApp"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="Tampleworks.UwpDemo"
+        Description="Tampleworks.WindowsApplicationBlock.Demo.UwpApp"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
