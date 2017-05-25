@@ -16,6 +16,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
         private readonly MemoryController memoryController = new MemoryController();
         private readonly IApplicationMemoryManager memoryManager;
         private readonly ISemanticLogger logger;
+        private readonly ExtendedExecutionTaskAgrigation extendedExecutionTaskAgrigation;
 
         internal ApplicationLogic(
             IApplicationLogicAgent applicationAgent, 
@@ -33,6 +34,8 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
             applicationAgent.LeavingBackground += () => isInBackground = false;
             applicationAgent.Suspension += () => { };
             memoryController.AskApplicationToReleaseMemoryFromView += MemoryController_AskApplicationToReleaseMemoryFromView;
+            extendedExecutionTaskAgrigation = new ExtendedExecutionTaskAgrigation(
+                applicationAgent.ExtendedExecutionSessionFactory, "Organisation data analysis.");
         }
 
         private async void MemoryManager_AppMemoryUsageLimitChanging(object sender, AppMemoryUsageLimitChangingEventArgs e)
@@ -81,7 +84,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
         public IWindowFrameController GetWindowFrameController(IWindowFrameControllerAgent agent)
             =>  new ApplicationMainWindowFrameController(
                 agent, 
-                new ViewModelDataProvider(memoryController, applicationAgent.ExtendedExecutionSessionFactory),
+                new ViewModelDataProvider(memoryController, extendedExecutionTaskAgrigation),
                 applicationAgent
             );
     }

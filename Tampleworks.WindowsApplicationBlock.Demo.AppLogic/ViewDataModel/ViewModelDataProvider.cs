@@ -11,16 +11,16 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ViewDataModel
     public sealed class ViewModelDataProvider : IViewModelDataProvider
     {
         private readonly MemoryController memoryController;
-        private readonly IExtendedExecutionSessionFactory extendedExecutionSessionFactory;
+        private readonly ExtendedExecutionTaskAgrigation extendedExecutionTaskAgrigation;
 
         public ViewModelDataProvider(
             MemoryController memoryController,
-            IExtendedExecutionSessionFactory extendedExecutionSessionFactory
+            ExtendedExecutionTaskAgrigation extendedExecutionTaskAgrigation
         )
         {
             this.memoryController = memoryController;
-            this.extendedExecutionSessionFactory = extendedExecutionSessionFactory;
-            ReportGeneration = new ReportGenerationAgentcs(extendedExecutionSessionFactory);
+            this.extendedExecutionTaskAgrigation = extendedExecutionTaskAgrigation;
+            ReportGeneration = new ReportGenerationAgentcs(extendedExecutionTaskAgrigation);
         }
 
         public IReportGenerationAgent ReportGeneration { get; }

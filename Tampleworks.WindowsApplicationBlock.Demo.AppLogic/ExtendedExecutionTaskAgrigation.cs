@@ -6,6 +6,9 @@ using Tampleworks.WindowsApplicationBlock.ViewModel;
 
 namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
 {
+    /// <summary>
+    /// Executes few tasks under shared requested but not required extended execution.
+    /// </summary>
     /// <remarks>
     /// Extended exection ussage is very not trivial task because it aquire and revoke may happed asynchronously.
     /// Client developer should be able naturally write application logic that will try requires extended exection
@@ -123,7 +126,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
         public interface IExtendedExecutionTaskAgrigationArg
         {
             bool InExtendedExecution { get; }
-            event Action InExtendedExecutionChanged;
+            event Action<bool> InExtendedExecutionChanged;
         }
 
         public sealed class ExtendedExecutionTaskAgrigationArg : IExtendedExecutionTaskAgrigationArg
@@ -145,12 +148,13 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
                 {
                     if (inExtendedExecution == value) return;
                     inExtendedExecution = value;
-                    OnInExtendedExecutionChanged();
+                    OnInExtendedExecutionChanged(value);
                 }
             }
-            public event Action InExtendedExecutionChanged;
+            public event Action<bool> InExtendedExecutionChanged;
 
-            private void OnInExtendedExecutionChanged() => InExtendedExecutionChanged?.Invoke();
+            private void OnInExtendedExecutionChanged(bool inExtendedExecution) 
+                => InExtendedExecutionChanged?.Invoke(inExtendedExecution);
         }
     }
 }

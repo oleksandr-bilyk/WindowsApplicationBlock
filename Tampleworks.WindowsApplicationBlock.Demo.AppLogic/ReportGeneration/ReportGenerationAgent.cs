@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
-using Tampleworks.WindowsApplicationBlock.ViewModel;
+using static Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ExtendedExecutionTaskAgrigation;
 
 namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ReportGeneration
 {
@@ -11,14 +11,14 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ReportGeneration
     /// </summary>
     internal sealed class ReportGenerationAgentcs : IReportGenerationAgent
     {
-        private readonly IExtendedExecutionSessionFactory extendedExecutionSessionFactory;
+        private readonly ExtendedExecutionTaskAgrigation extendedExecutionTaskAgrigation;
         private readonly ConcurrentDictionary<Guid, ReportGenerationStateInfo> stateMap;
 
         public ReportGenerationAgentcs(
-            IExtendedExecutionSessionFactory extendedExecutionSessionFactory
+            ExtendedExecutionTaskAgrigation extendedExecutionTaskAgrigation
         )
         {
-            this.extendedExecutionSessionFactory = extendedExecutionSessionFactory;
+            this.extendedExecutionTaskAgrigation = extendedExecutionTaskAgrigation;
             stateMap = new ConcurrentDictionary<Guid, ReportGenerationStateInfo>();
         }
 
@@ -31,36 +31,33 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ReportGeneration
 
         public async Task<bool> StartGenerationAsync(Guid organisationId)
         {
-            var cancellationTokenSource = new CancellationTokenSource();
-            var extendedExectuionSession = await extendedExecutionSessionFactory.TryRequestAsync(
-                "Rendering", 
-                revokedBySystemPolicy: () => cancellationTokenSource.Cancel()
+            var firstProgressSetCompleted = new TaskCompletionSource<bool>();
+            var task = extendedExecutionTaskAgrigation.ExecuteAsync(
+                async context =>
+                {
+                    var initialState = ReportGenerationStateInfo.NewRunning(
+                        new ReportGenerationRunningInfo(progressValue: null, runningInExtendedExecution: context.InExtendedExecution)
+                    );
+                    bool startedByOrganisation = stateMap.TryAdd(organisationId, initialState);
+                    firstProgressSetCompleted.SetResult(startedByOrganisation);
+
+                    await ReportGenerationWork(organisationId, context);
+                }
             );
 
-            var initialState = ReportGenerationStateInfo.NewRunning(
-                new ReportGenerationRunningInfo(progressValue: null, runningInExtendedExecution: extendedExectuionSession != null));
-            if (!stateMap.TryAdd(organisationId, initialState))
-                return false;
-
-            var task = ReportGenerationWork(
-                organisationId, extendedExectuionSession, cancellationTokenSource
-            );
-
-            return true;
+            return await firstProgressSetCompleted.Task;
         }
 
         private async Task ReportGenerationWork(
-            Guid organisationId, 
-            IDisposable extendedExectuionSession,
-            CancellationTokenSource cancellationTokenSource
+            Guid organisationId,
+            IExtendedExecutionTaskAgrigationArg executionContext
         )
         {
-            using (cancellationTokenSource)
-            using (extendedExectuionSession)
+            using (var cancellationTokenSource = new CancellationTokenSource())
             {
                 try
                 {
-                    await FooWork(organisationId, extendedExectuionSession, cancellationTokenSource.Token);
+                    await FooWork(organisationId, executionContext, cancellationTokenSource.Token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -79,7 +76,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ReportGeneration
 
         private async Task FooWork(
             Guid organisationId,
-            IDisposable extendedExectuionSession,
+            IExtendedExecutionTaskAgrigationArg executionContext,
             CancellationToken cancellationToken
         )
         {
@@ -92,8 +89,18 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ReportGeneration
                 {
                     if (currentDuration > expectedDuration) { currentDuration = expectedDuration; }
                     double completedPercent = currentDuration.TotalMilliseconds / expectedDuration.TotalMilliseconds * 100.0;
-                    stateMap[organisationId] = ReportGenerationStateInfo.NewRunning(new ReportGenerationRunningInfo(progressValue: completedPercent, runningInExtendedExecution: extendedExectuionSession != null));
-                    await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);
+                    stateMap[organisationId] = ReportGenerationStateInfo.NewRunning(
+                        new ReportGenerationRunningInfo(
+                            progressValue: completedPercent, runningInExtendedExecution: executionContext.InExtendedExecution
+                        )
+                    );
+                    var extendedExecutionChanged = new TaskCompletionSource<bool>();
+                    executionContext.InExtendedExecutionChanged += 
+                        (bool inExtendedExecution) => extendedExecutionChanged.SetResult(inExtendedExecution);
+                    await Task.WhenAny(
+                        Task.Delay(TimeSpan.FromSeconds(2), cancellationToken),
+                        extendedExecutionChanged.Task
+                    );
                 }
                 else break;
             }
