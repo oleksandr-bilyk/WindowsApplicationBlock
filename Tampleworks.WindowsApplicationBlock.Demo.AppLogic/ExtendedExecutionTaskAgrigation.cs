@@ -7,7 +7,7 @@ using Tampleworks.WindowsApplicationBlock.ViewModel;
 namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
 {
     /// <summary>
-    /// Executes few tasks under shared requested but not required extended execution.
+    /// Executes few tasks under shared requested extended execution.
     /// </summary>
     /// <remarks>
     /// Extended exection ussage is very not trivial task because it aquire and revoke may happed asynchronously.
@@ -18,12 +18,23 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
     /// executed without extended exection session and be aware that application will stop exection while minimized.
     /// See MSDN artile "Run while minimized with extended execution" https://docs.microsoft.com/en-us/windows/uwp/launch-resume/run-minimized-with-extended-execution
     /// "Windows 10 Background Execution and Multi-Tasking" https://channel9.msdn.com/Events/Ignite/2015/BRK3344
+    /// 
+    /// On start this method attemts to request extended execution session if it was not got by other tasks
+    /// then single instande of extended execution session will be created. If all tasks are completed then 
+    /// extended execution session will be released.
+    /// Every execution task may subscribe to extended exectuion state changed. Task may be executed without 
+    /// extended execution in following cases:
+    /// - extended execution cannot be aquired. Task may do not start execution at all if extended execution is required.
+    /// - extended execution was revoked. Taks may urgently stop its execution if it doesn't want to be suspended application.
+    /// Some tasks may request but not require extended execution then they will be accasionally frizzed till application
+    /// will be resumed. 
+    /// UI may notify user about extended execution session availability change.
     /// </remarks>
     public sealed class ExtendedExecutionTaskAgrigation
     {
         private readonly IExtendedExecutionSessionFactory extendedExecutionSessionFactory;
         private readonly string sessionDeskription;
-        internal readonly SpinLock syncRoot = new SpinLock(enableThreadOwnerTracking: false);
+        internal readonly SemaphoreSlim syncRoot = new SemaphoreSlim(1);
         private IDisposable extendedExecutionSession;
         private readonly List<ExtendedExecutionTaskAgrigationArg> parallelExecutions = new List<ExtendedExecutionTaskAgrigationArg>();
 
@@ -36,65 +47,90 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
             this.sessionDeskription = sessionDeskription;
         }
 
-        /// <remarks>
-        /// On start this method attemts to request extended execution session if it was not got by other tasks
-        /// then single instande of extended execution session will be created. If all tasks are completed then 
-        /// extended execution session will be released.
-        /// Every execution task may subscribe to extended exectuion state changed. Task may be executed without 
-        /// extended execution in following cases:
-        /// - extended execution cannot be aquired. Task may do not start execution at all if extended execution is required.
-        /// - extended execution was revoked. Taks may urgently stop its execution if it doesn't want to be suspended application.
-        /// Some tasks may request but not require extended execution then they will be accasionally frizzed till application
-        /// will be resumed. 
-        /// UI may notify user about extended execution session availability change.
-        /// </remarks>
         public async Task ExecuteAsync(
             Func<IExtendedExecutionTaskAgrigationArg, Task> taskFunc
         )
         {
             var arg = new ExtendedExecutionTaskAgrigationArg(this);
             try
-            {
-                bool lockTaken = false;
-                syncRoot.Enter(ref lockTaken);
-                if (!lockTaken) throw new InvalidOperationException("Cannot taken lock.");
+            {// Try get extended exectuion session
+                await syncRoot.WaitAsync();
 
-                parallelExecutions.Add(arg);
                 if (extendedExecutionSession == null)
                 {
                     extendedExecutionSession = await extendedExecutionSessionFactory.TryRequestAsync(sessionDeskription, Revoke);
                 }
-                UpdateTasks();
+                parallelExecutions.Add(arg);
+                UpdateAllTasksInExtendedExecution();
             }
-            finally
-            {
-                syncRoot.Exit();
-            }
-
-            await taskFunc(arg);
+            finally { syncRoot.Release(); }
 
             try
-            {
-                bool lockTaken = false;
-                syncRoot.Enter(ref lockTaken);
-                if (!lockTaken) throw new InvalidOperationException("Cannot taken lock.");
-
-                parallelExecutions.Remove(arg);
-
-                if (parallelExecutions.Count == 0 && extendedExecutionSession != null)
-                {
-                    extendedExecutionSession.Dispose();
-                    extendedExecutionSession = null;
-                }
-                UpdateTasks();
+            {// Strategy execution
+                await taskFunc(arg);
             }
             finally
             {
-                syncRoot.Exit();
+                try
+                {// release extended exectuion session
+                    await syncRoot.WaitAsync();
+
+                    parallelExecutions.Remove(arg);
+
+                    if (parallelExecutions.Count == 0 && extendedExecutionSession != null)
+                    {
+                        extendedExecutionSession.Dispose();
+                        extendedExecutionSession = null;
+                    }
+                    UpdateAllTasksInExtendedExecution();
+                }
+                finally { syncRoot.Release(); }
             }
         }
 
-        private void UpdateTasks()
+        public async Task<TResult> ExecuteAsync<TResult>(
+            Func<IExtendedExecutionTaskAgrigationArg, Task<TResult>> taskFunc
+        )
+        {
+            var arg = new ExtendedExecutionTaskAgrigationArg(this);
+            try
+            {// Try get extended exectuion session
+                await syncRoot.WaitAsync();
+                
+                if (extendedExecutionSession == null)
+                {
+                    extendedExecutionSession = await extendedExecutionSessionFactory.TryRequestAsync(sessionDeskription, Revoke);
+                }
+                parallelExecutions.Add(arg);
+                UpdateAllTasksInExtendedExecution();
+            }
+            finally { syncRoot.Release(); }
+
+            try
+            {// Strategy execution
+                TResult result = await taskFunc(arg);
+                return result;
+            }
+            finally
+            {
+                try
+                {// release extended exectuion session
+                    await syncRoot.WaitAsync();
+
+                    parallelExecutions.Remove(arg);
+
+                    if (parallelExecutions.Count == 0 && extendedExecutionSession != null)
+                    {
+                        extendedExecutionSession.Dispose();
+                        extendedExecutionSession = null;
+                    }
+                    UpdateAllTasksInExtendedExecution();
+                }
+                finally { syncRoot.Release(); }
+            }
+        }
+
+        private void UpdateAllTasksInExtendedExecution()
         {
             foreach (var item in parallelExecutions)
             {
@@ -106,21 +142,16 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
         {
             try
             {
-                bool lockTaken = false;
-                syncRoot.Enter(ref lockTaken);
-                if (!lockTaken) throw new InvalidOperationException("Cannot taken lock.");
+                syncRoot.Wait();
 
                 if (extendedExecutionSession != null)
                 {
                     extendedExecutionSession.Dispose();
                     extendedExecutionSession = null;
                 }
-                UpdateTasks();
+                UpdateAllTasksInExtendedExecution();
             }
-            finally
-            {
-                syncRoot.Exit();
-            }
+            finally { syncRoot.Release(); }
         }
 
         public interface IExtendedExecutionTaskAgrigationArg

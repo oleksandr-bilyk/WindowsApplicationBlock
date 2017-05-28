@@ -52,5 +52,31 @@ namespace Tampleworks.WindowsApplicationBlock.WindowsUniversalView
             var dialog = new MessageDialog(content);
             var command = await dialog.ShowAsync();
         }
+
+        public async Task<StringContentDialogResult> ShowStringContentDialog(ContentDialogParameters parameters)
+        {
+            var dialog = new ContentDialog
+            {
+                Title = parameters.Title,
+                Content = parameters.Content,
+                
+            };
+            if (parameters.PrimaryButtonText != null)
+            {
+                dialog.PrimaryButtonText = parameters.PrimaryButtonText;
+            }
+            if (parameters.SecondaryButtonText != null)
+            {
+                dialog.SecondaryButtonText = parameters.SecondaryButtonText;
+            }
+            var result = await dialog.ShowAsync();
+            switch (result)
+            {
+                case ContentDialogResult.None: return StringContentDialogResult.None;
+                case ContentDialogResult.Primary: return StringContentDialogResult.Primary;
+                case ContentDialogResult.Secondary: return StringContentDialogResult.Secondary;
+                default: throw new NotSupportedException();
+            }
+        }
     }
 }

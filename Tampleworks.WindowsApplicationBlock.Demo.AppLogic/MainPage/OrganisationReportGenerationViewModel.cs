@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ReportGeneration;
 using Tampleworks.WindowsApplicationBlock.ViewModel;
@@ -15,17 +16,21 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage
         private string executionErrorText;
         private double progressValue;
         private bool progressIsIndeterminate;
+        private readonly Func<bool> getRequireExtendedExecution;
+        private bool runningInExtendedExecution;
 
         public OrganisationReportGenerationViewModel(
             Guid organisationId,
             IWindowFrameControllerAgent viewAgent,
-            IReportGenerationAgent reportGenerationAgent
+            IReportGenerationAgent reportGenerationAgent,
+            Func<bool> getRequireExtendedExecution
         )
         {
             this.organisationId = organisationId;
             this.viewAgent = viewAgent;
             this.reportGenerationAgent = reportGenerationAgent;
             isRunning = false;
+            this.getRequireExtendedExecution = getRequireExtendedExecution;
         }
 
         public bool IsNotRunning => !IsRunning;
@@ -84,11 +89,73 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage
             }
         }
 
+        public bool RunningInExtendedExecution
+        {
+            get { return runningInExtendedExecution; }
+            private set
+            {
+                if (runningInExtendedExecution == value) return;
+                runningInExtendedExecution = value;
+                OnCallerPropertyChanged();
+            }
+        }
+
         public async void Run()
         {
-            if (await reportGenerationAgent.StartGenerationAsync(organisationId))
+            try
             {
-                await ObserverReportGeneration();
+                ReportGenerationStartResult startResult;
+                do
+                {
+                    startResult = await reportGenerationAgent.StartGenerationAsync(organisationId, getRequireExtendedExecution());
+                    switch (startResult)
+                    {
+                        case ReportGenerationStartResult.Started: break;
+                        case ReportGenerationStartResult.PreviousOperationCompleted:
+                            if (await ApproveRunReportAgain())
+                            {
+                                reportGenerationAgent.ResetCompleted(organisationId);
+                                startResult = await reportGenerationAgent.StartGenerationAsync(organisationId, getRequireExtendedExecution());
+                                Debug.Assert(startResult == ReportGenerationStartResult.Started);
+                                break;
+                            }
+                            else return;
+                        default: throw new NotSupportedException();
+                    }
+                } while (startResult != ReportGenerationStartResult.Started);
+            }
+            catch (UserMessageException exc)
+            {
+                await viewAgent.ShowStringContentDialog(
+                    new ContentDialogParameters
+                    {
+                        Title = "Report generation start failed.",
+                        Content = exc.Message,
+                        PrimaryButtonText = "OK",
+                    }
+                );
+                return;
+            }
+
+            await ObserverReportGeneration();
+        }
+
+        private async Task<bool> ApproveRunReportAgain()
+        {
+            var result = await viewAgent.ShowStringContentDialog(
+                new ContentDialogParameters
+                {
+                    Title = "Report Generation",
+                    Content = "Organisation report generation was completed before. Do you want to start its generation again?",
+                    PrimaryButtonText = "Ok",
+                    SecondaryButtonText = "Cancel",
+                }
+            );
+            switch (result)
+            {
+                case StringContentDialogResult.Primary: return true;
+                case StringContentDialogResult.Secondary: return false;
+                default: throw new NotSupportedException();
             }
         }
 
@@ -128,6 +195,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage
                         IsRunning = true;
                         ProgressIsIndeterminate = !state.Running.ProgressValue.HasValue;
                         ProgressValue = state.Running.ProgressValue ?? 0;
+                        RunningInExtendedExecution = state.Running.RunningInExtendedExecution;
                         ExecutionErrorText = string.Empty;
                         ExecutionErrorIsVisible = false;
                         break;

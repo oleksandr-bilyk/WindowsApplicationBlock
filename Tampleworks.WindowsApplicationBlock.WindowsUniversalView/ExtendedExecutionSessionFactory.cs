@@ -10,18 +10,20 @@ namespace Tampleworks.WindowsApplicationBlock.WindowsUniversalView
         public ExtendedExecutionSessionFactory() { }
 
         public async Task<IDisposable> TryRequestAsync(
-            string description, Action revokedBySystemPolicy
+            string description, Action revoked
         )
         {
             var session = new ExtendedExecutionSession();
             session.Reason = ExtendedExecutionReason.Unspecified;
             session.Description = description;
-            session.Revoked += (sender, e) => revokedBySystemPolicy();
+            session.Revoked += (sender, e) => revoked();
             ExtendedExecutionResult result = await session.RequestExtensionAsync();
             switch (result)
             {
                 case ExtendedExecutionResult.Allowed: return session;
-                case ExtendedExecutionResult.Denied: return null;
+                case ExtendedExecutionResult.Denied:
+                    session.Dispose();
+                    return null;
                 default: throw new NotSupportedException();
             }
         }

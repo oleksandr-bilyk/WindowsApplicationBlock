@@ -8,6 +8,7 @@ namespace Tampleworks.WindowsApplicationBlock.ViewModel
         Task ShowMessageBoxOkAsync(string content);
         Task RunInViewDispatcherAsync(Action action);
         Task<bool> OpenNewViewAsync(IWindowFrameControllerFactory windowFrameControllerFactory);
+        Task<StringContentDialogResult> ShowStringContentDialog(ContentDialogParameters parameters);
         IWindowFrameNavigationAgent Navigation { get; }
 
         /// <summary>

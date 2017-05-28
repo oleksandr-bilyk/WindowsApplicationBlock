@@ -32,5 +32,10 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.UwpApp
                 await model.ReportGeneration.ObserverReportGeneration();
             }
         }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Bindings.StopTracking();
+        }
     }
 }

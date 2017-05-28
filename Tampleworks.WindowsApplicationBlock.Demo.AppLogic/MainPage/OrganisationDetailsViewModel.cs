@@ -6,7 +6,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage
 {
     public sealed class OrganisationDetailsViewModel : ViewModelBase
     {
-        private bool isFavorite;
+        private bool requireExtendedExecution;
 
         public OrganisationDetailsViewModel(
             Guid organisationId,
@@ -15,7 +15,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage
         )
         {
             ReportGeneration = new OrganisationReportGenerationViewModel(
-                organisationId, viewAgent, viewModelDataProvider.ReportGeneration
+                organisationId, viewAgent, viewModelDataProvider.ReportGeneration, () => requireExtendedExecution
             );
         }
 
@@ -24,19 +24,19 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage
         public bool LogoIsAvaialble => Logo != null;
 
         public byte[] Logo { get; set; }
-        public bool IsFavorite
+        public bool RequireExtendedExecution
         {
-            get { return isFavorite; }
+            get { return requireExtendedExecution; }
             set
             {
-                if (isFavorite == value) return;
-                isFavorite = value;
+                if (requireExtendedExecution == value) return;
+                requireExtendedExecution = value;
                 OnCallerPropertyChanged();
-                OnIsFavoriteChanged();
+                OnRequireExtendedExecution();
             }
         }
-        public event Action IsFavoriteChanged;
-        private void OnIsFavoriteChanged() => IsFavoriteChanged?.Invoke();
+        public event Action RequireExtendedExecutionChanged;
+        private void OnRequireExtendedExecution() => RequireExtendedExecutionChanged?.Invoke();
 
         public OrganisationReportGenerationViewModel ReportGeneration { get; }
     }

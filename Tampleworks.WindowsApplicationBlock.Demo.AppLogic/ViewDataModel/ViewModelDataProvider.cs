@@ -39,19 +39,19 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ViewDataModel
             },
             new OrgData
             {
-                Id = new Guid("3b5eb6db-5c78-4c30-99e5-b55b02d8da06"),
+                Id = new Guid("c2758e9f-e25e-41eb-9857-1ac1764cf3e0"),
                 Title = "Organisation 2",
                 Notes = "Big organisaiton"
             },
             new OrgData
             {
-                Id = new Guid("3b5eb6db-5c78-4c30-99e5-b55b02d8da06"),
+                Id = new Guid("a4b47bfa-6f1b-49c6-b601-6adea4b68f1b"),
                 Title = "Organisation 4",
                 Notes = "Big organisaiton"
             },
             new OrgData
             {
-                Id = new Guid("3b5eb6db-5c78-4c30-99e5-b55b02d8da06"),
+                Id = new Guid("86731f75-cbe0-4636-aa38-64eee9e0c333"),
                 Title = "Organisation 5",
                 Notes = "Big organisaiton"
             },

@@ -33,7 +33,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.UwpApp
         {
         }
 
-        public static Brush IsFavoriteToBrush(bool isFavorite)
-            => isFavorite ? new SolidColorBrush(Colors.Orange) : null;
+        public static Brush RequireExtendedExecutionToBrush(bool requireExtendedExecutionToBrush)
+            => requireExtendedExecutionToBrush ? new SolidColorBrush(Colors.Orange) : null;
     }
 }

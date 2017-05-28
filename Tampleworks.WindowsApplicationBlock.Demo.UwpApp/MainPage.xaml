@@ -29,7 +29,7 @@
                 <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{x:Bind ViewModel.Organisations.ItemCollection, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.Organisations.ItemSelected, Mode=TwoWay}" ItemContainerStyle="{StaticResource ListBoxItemStyle1}">
                     <ListBox.ItemTemplate>
                         <DataTemplate x:DataType="Tampleworks_WindowsApplicationBlock_Demo_AppLogic_MainPage:OrganisationTitleViewModel">
-                            <Grid Background="{x:Bind local:MainPage.IsFavoriteToBrush(IsFavorite), Mode=OneWay}" HorizontalAlignment="Stretch">
+                            <Grid Background="{x:Bind local:MainPage.RequireExtendedExecutionToBrush(RequireExtendedExecution), Mode=OneWay}" HorizontalAlignment="Stretch">
                                 <StackPanel Margin="12,11,12,13">
                                     <TextBlock Text="{x:Bind Title}" FontWeight="Bold"/>
                                     <TextBlock Text="{x:Bind Notes}"/>

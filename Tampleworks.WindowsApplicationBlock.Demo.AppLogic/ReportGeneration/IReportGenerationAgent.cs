@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ReportGeneration
@@ -9,7 +8,9 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ReportGeneration
     /// </summary>
     public interface IReportGenerationAgent
     {
-        Task<bool> StartGenerationAsync(Guid organisationId);
+        Task<ReportGenerationStartResult> StartGenerationAsync(Guid organisationId, bool requireNonbreakingBehavior);
         ReportGenerationStateInfo GetStateAsync(Guid organisationId);
+        void ResetCompleted(Guid organisationId);
+        void CancelByUser(Guid organisationId);
     }
 }

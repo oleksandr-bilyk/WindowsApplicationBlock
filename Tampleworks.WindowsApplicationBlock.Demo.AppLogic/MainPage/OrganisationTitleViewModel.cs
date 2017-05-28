@@ -7,7 +7,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage
     {
         internal readonly OrganisationTitle Data;
         private IViewModelDataProvider viewModelDataProvider;
-        private bool isFavorite;
+        private bool requireExtendedExecution;
 
         public OrganisationTitleViewModel(
             IWindowFrameControllerAgent viewAgent,
@@ -19,25 +19,25 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage
             this.viewModelDataProvider = viewModelDataProvider;
             Details = new OrganisationDetailsViewModel(
                 item.OrganisationId, viewAgent, viewModelDataProvider);
-            Details.IsFavoriteChanged += Details_IsFavoriteChanged;
+            Details.RequireExtendedExecutionChanged += Details_RequireExtendedExecutionChanged;
         }
 
-        private void Details_IsFavoriteChanged()
+        private void Details_RequireExtendedExecutionChanged()
         {
-            IsFavorite = Details.IsFavorite;
+            RequireExtendedExecution = Details.RequireExtendedExecution;
         }
 
         public string Title => Data.Title;
 
         public string Notes => Data.Notes;
 
-        public bool IsFavorite
+        public bool RequireExtendedExecution
         {
-            get { return isFavorite; }
+            get { return requireExtendedExecution; }
             private set
             {
-                if (isFavorite == value) return;
-                isFavorite = value;
+                if (requireExtendedExecution == value) return;
+                requireExtendedExecution = value;
                 OnCallerPropertyChanged();
             }
         }
