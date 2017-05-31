@@ -7,8 +7,8 @@
     <ProjectGuid>{547FC546-E50F-4487-92F0-54F0982105F2}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tampleworks.WindowsApplicationBlock.Demo.UwpApp</RootNamespace>
-    <AssemblyName>Tampleworks.WindowsApplicationBlock.Demo.UwpApp</AssemblyName>
+    <RootNamespace>Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication</RootNamespace>
+    <AssemblyName>Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
@@ -159,17 +159,17 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions\Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions.csproj">
+    <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions\ApplicationLogicAbstractions.csproj">
       <Project>{2883784e-634a-4321-996e-802dfeef00ce}</Project>
-      <Name>Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions</Name>
+      <Name>ApplicationLogicAbstractions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment\Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment.csproj">
+    <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment\ApplicationLogicEnvironment.csproj">
       <Project>{7d6ada7b-ea96-4502-8161-8a25bb9bdb17}</Project>
-      <Name>Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment</Name>
+      <Name>ApplicationLogicEnvironment</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic\Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.csproj">
+    <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic\Demo.ApplicationLogic.csproj">
       <Project>{d2dcdbca-c214-4da9-8ad7-555fb047364b}</Project>
-      <Name>Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic</Name>
+      <Name>Demo.ApplicationLogic</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

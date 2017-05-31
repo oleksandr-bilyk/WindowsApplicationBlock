@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions", "Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions\Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions.csproj", "{2883784E-634A-4321-996E-802DFEEF00CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationLogicAbstractions", "Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions\ApplicationLogicAbstractions.csproj", "{2883784E-634A-4321-996E-802DFEEF00CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment", "Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment\Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment.csproj", "{7D6ADA7B-EA96-4502-8161-8A25BB9BDB17}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationLogicEnvironment", "Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment\ApplicationLogicEnvironment.csproj", "{7D6ADA7B-EA96-4502-8161-8A25BB9BDB17}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic", "Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic\Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.csproj", "{D2DCDBCA-C214-4DA9-8AD7-555FB047364B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.ApplicationLogic", "Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic\Demo.ApplicationLogic.csproj", "{D2DCDBCA-C214-4DA9-8AD7-555FB047364B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication", "Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication\Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication.csproj", "{547FC546-E50F-4487-92F0-54F0982105F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.UniversalWindowsApplication", "Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication\Demo.UniversalWindowsApplication.csproj", "{547FC546-E50F-4487-92F0-54F0982105F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

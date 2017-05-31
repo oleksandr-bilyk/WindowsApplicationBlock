@@ -126,9 +126,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions\Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions.csproj">
+    <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions\ApplicationLogicAbstractions.csproj">
       <Project>{2883784e-634a-4321-996e-802dfeef00ce}</Project>
-      <Name>Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions</Name>
+      <Name>ApplicationLogicAbstractions</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

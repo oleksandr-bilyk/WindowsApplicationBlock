@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.1</TargetFramework>
+    <AssemblyName>Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic</AssemblyName>
+    <RootNamespace>Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions\Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions.csproj" />
+    <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions\ApplicationLogicAbstractions.csproj" />
     <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.ViewModel\Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions.csproj" />
   </ItemGroup>
 
