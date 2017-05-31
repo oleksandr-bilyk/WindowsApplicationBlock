@@ -1,8 +1,8 @@
-﻿using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ApplicationLogicData;
-using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.Tracing;
+﻿using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ApplicationLogicData;
+using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.Tracing;
 using Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
+namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic
 {
     public sealed class ApplicationLogicFactory : IApplicationLogicFactory
     {

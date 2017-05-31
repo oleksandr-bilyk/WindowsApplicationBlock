@@ -1,4 +1,4 @@
-﻿using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage;
+﻿using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.MainPage;
 using Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.UwpApp
+namespace Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication
 {
     public sealed partial class MainPage : Page
     {

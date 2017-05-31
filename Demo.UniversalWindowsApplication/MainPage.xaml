@@ -1,11 +1,11 @@
 ﻿<Page
-    x:Class="Tampleworks.WindowsApplicationBlock.Demo.UwpApp.MainPage"
+    x:Class="Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="using:Tampleworks.WindowsApplicationBlock.Demo.UwpApp"
+    xmlns:local="using:Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication"
     xmlns:ViewModel="using:Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions"
-    xmlns:Tampleworks_WindowsApplicationBlock_Demo_AppLogic_MainPage="using:Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage"
+    xmlns:Tampleworks_WindowsApplicationBlock_Demo_ApplicationLogic_MainPage="using:Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.MainPage"
     Loaded="Page_Loaded"
     Unloaded="Page_Unloaded">
     <Page.Resources>
@@ -28,7 +28,7 @@
             <Grid x:Name="OrganisationList" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWith="Title" MaxWidth="700" RelativePanel.Below="Title" RelativePanel.AlignBottomWithPanel="True">
                 <ListBox HorizontalContentAlignment="Stretch" ItemsSource="{x:Bind ViewModel.Organisations.ItemCollection, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.Organisations.ItemSelected, Mode=TwoWay}" ItemContainerStyle="{StaticResource ListBoxItemStyle1}">
                     <ListBox.ItemTemplate>
-                        <DataTemplate x:DataType="Tampleworks_WindowsApplicationBlock_Demo_AppLogic_MainPage:OrganisationTitleViewModel">
+                        <DataTemplate x:DataType="Tampleworks_WindowsApplicationBlock_Demo_ApplicationLogic_MainPage:OrganisationTitleViewModel">
                             <Grid Background="{x:Bind local:MainPage.RequireExtendedExecutionToBrush(RequireExtendedExecution), Mode=OneWay}" HorizontalAlignment="Stretch">
                                 <StackPanel Margin="12,11,12,13">
                                     <TextBlock Text="{x:Bind Title}" FontWeight="Bold"/>

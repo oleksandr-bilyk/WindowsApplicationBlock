@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
+namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic
 {
     /// <summary>
     /// Executes few tasks under shared requested extended execution.

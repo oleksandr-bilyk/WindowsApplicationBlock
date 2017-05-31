@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.Tracing;
+using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.Tracing;
 using Windows.Foundation.Diagnostics;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.UwpApp
+namespace Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication
 {
     public class SemanticLogger : ISemanticLogger
     {

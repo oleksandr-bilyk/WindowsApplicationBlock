@@ -1,9 +1,9 @@
 ﻿<Application
-    x:Class="Tampleworks.WindowsApplicationBlock.Demo.UwpApp.App"
+    x:Class="Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Tampleworks.WindowsApplicationBlock.Demo.UwpApp"
-    xmlns:Converters="using:Tampleworks.WindowsApplicationBlock.Demo.UwpApp.Converters"
+    xmlns:local="using:Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication"
+    xmlns:Converters="using:Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication.Converters"
     RequestedTheme="Light">
     <Application.Resources>
         <ResourceDictionary>

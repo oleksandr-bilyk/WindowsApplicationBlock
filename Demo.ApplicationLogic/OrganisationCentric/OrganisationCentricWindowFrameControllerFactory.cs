@@ -1,7 +1,7 @@
-﻿using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ViewDataModel;
+﻿using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ViewDataModel;
 using Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.OrganisationCentric
+namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.OrganisationCentric
 {
     internal sealed class OrganisationCentricWindowFrameControllerFactory : IWindowFrameControllerFactory
     {

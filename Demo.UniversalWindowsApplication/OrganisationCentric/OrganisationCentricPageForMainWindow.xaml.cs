@@ -1,10 +1,10 @@
-﻿using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.OrganisationCentric;
+﻿using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.OrganisationCentric;
 using Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.UwpApp.OrganisationCentric
+namespace Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication.OrganisationCentric
 {
     public sealed partial class OrganisationCentricPageForMainWindow : Page
     {

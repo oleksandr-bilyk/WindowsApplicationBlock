@@ -1,4 +1,4 @@
-﻿namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.Tracing
+﻿namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.Tracing
 {
     public interface ISemanticLogger
     {

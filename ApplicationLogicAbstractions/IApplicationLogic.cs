@@ -7,6 +7,6 @@
     /// </remarks>
     public interface IApplicationLogic
     {
-        IWindowFrameControllerFactory MainWindowFrameControllerFactory { get; }
+        IWindowFrameControllerFactory PrimaryWindowFrameControllerFactory { get; }
     }
 }

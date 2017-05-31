@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
+namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic
 {
     public interface IApplicationMemoryManager
     {

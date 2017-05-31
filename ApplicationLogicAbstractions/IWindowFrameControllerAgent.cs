@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 
 namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions
 {
+    /// <summary>
+    /// Allows to manage window content and execute tasks in its thread  dispatcher.
+    /// </summary>
     public interface IWindowFrameControllerAgent
     {
         Task ShowMessageBoxOkAsync(string content);

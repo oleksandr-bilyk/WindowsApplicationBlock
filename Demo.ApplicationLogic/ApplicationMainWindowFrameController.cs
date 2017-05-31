@@ -1,8 +1,8 @@
-﻿using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ViewDataModel;
-using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage;
+﻿using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ViewDataModel;
+using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.MainPage;
 using Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
+namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic
 {
     public sealed class ApplicationMainWindowFrameController : IWindowFrameController
     {

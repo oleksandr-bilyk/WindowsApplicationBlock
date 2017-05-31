@@ -1,8 +1,8 @@
 ﻿using System;
-using Tampleworks.WindowsApplicationBlock.Demo.AppLogic;
+using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic;
 using Windows.System;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.UwpApp
+namespace Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication
 {
     internal sealed class ApplicationMemoryManger : IApplicationMemoryManager
     {
@@ -14,9 +14,12 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.UwpApp
 
         public ulong AppMemoryUsage => MemoryManager.AppMemoryUsage;
 
-        public event EventHandler<Demo.AppLogic.AppMemoryUsageLimitChangingEventArgs> AppMemoryUsageLimitChanging;
+        public event EventHandler<ApplicationLogic.AppMemoryUsageLimitChangingEventArgs> AppMemoryUsageLimitChanging;
 
-        private void OnAppMemoryUsageLimitChanging(ulong newLimit, ulong oldLimit) 
-            => AppMemoryUsageLimitChanging?.Invoke(this, new Demo.AppLogic.AppMemoryUsageLimitChangingEventArgs(newLimit, oldLimit));
+        private void OnAppMemoryUsageLimitChanging(ulong newLimit, ulong oldLimit) => 
+            AppMemoryUsageLimitChanging?.Invoke(
+                this, 
+                new ApplicationLogic.AppMemoryUsageLimitChangingEventArgs(newLimit, oldLimit)
+            );
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ViewDataModel
+﻿namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ViewDataModel
 {
     public sealed class OrganisationDetails
     {

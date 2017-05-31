@@ -1,6 +1,6 @@
 ﻿using Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ApplicationLogicData
+namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ApplicationLogicData
 {
     public interface IApplicationLogicDataProviderFactory
     {

@@ -1,4 +1,4 @@
-﻿namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ReportGeneration
+﻿namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ReportGeneration
 {
     public sealed class ReportGenerationFaultInfo
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ReportGeneration;
+using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ReportGeneration;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ViewDataModel
+namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ViewDataModel
 {
     public interface IViewModelDataProvider
     {

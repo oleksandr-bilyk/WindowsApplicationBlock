@@ -159,16 +159,16 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions\ApplicationLogicAbstractions.csproj">
-      <Project>{2883784e-634a-4321-996e-802dfeef00ce}</Project>
+    <ProjectReference Include="..\ApplicationLogicAbstractions\ApplicationLogicAbstractions.csproj">
+      <Project>{e79a56af-9444-4412-8def-fcf741d3ac22}</Project>
       <Name>ApplicationLogicAbstractions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment\ApplicationLogicEnvironment.csproj">
+    <ProjectReference Include="..\ApplicationLogicEnvironment\ApplicationLogicEnvironment.csproj">
       <Project>{7d6ada7b-ea96-4502-8161-8a25bb9bdb17}</Project>
       <Name>ApplicationLogicEnvironment</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic\Demo.ApplicationLogic.csproj">
-      <Project>{d2dcdbca-c214-4da9-8ad7-555fb047364b}</Project>
+    <ProjectReference Include="..\Demo.ApplicationLogic\Demo.ApplicationLogic.csproj">
+      <Project>{ac1e439a-9957-475d-9a4b-f3928beca801}</Project>
       <Name>Demo.ApplicationLogic</Name>
     </ProjectReference>
   </ItemGroup>

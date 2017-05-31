@@ -64,7 +64,7 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
 
             if (windowsManger == null)
             {
-                windowsManger = new ViewsManager(applicationLogicContext.ApplicaitonLogic.MainWindowFrameControllerFactory, getPageTypeByPageId);
+                windowsManger = new ViewsManager(applicationLogicContext.ApplicaitonLogic.PrimaryWindowFrameControllerFactory, getPageTypeByPageId);
             }
 
             if (e.PrelaunchActivated == false)

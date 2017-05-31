@@ -1,7 +1,7 @@
-﻿using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.OrganisationCentric;
+﻿using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.OrganisationCentric;
 using Windows.UI.Xaml.Controls;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.UwpApp.OrganisationCentric
+namespace Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication.OrganisationCentric
 {
     public sealed partial class OrganisationCentricContent : UserControl
     {

@@ -3,7 +3,7 @@
   <Identity Name="0a5165f5-c7c7-40e5-8f22-b24ec4f2a3c1" Publisher="CN=oleks" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="0a5165f5-c7c7-40e5-8f22-b24ec4f2a3c1" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>Tampleworks.WindowsApplicationBlock.Demo.UwpApp</DisplayName>
+    <DisplayName>Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication</DisplayName>
     <PublisherDisplayName>oleks</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>

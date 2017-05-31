@@ -1,9 +1,9 @@
 ﻿using System;
-using Tampleworks.WindowsApplicationBlock.Demo.AppLogic;
-using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ApplicationLogicData;
+using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic;
+using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ApplicationLogicData;
 using Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.UwpApp
+namespace Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication
 {
     public sealed class CompositionRoot
     {

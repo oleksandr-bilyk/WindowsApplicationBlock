@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ReportGeneration
+namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ReportGeneration
 {
     /// <summary>
     /// Services report generation process for every organisation.

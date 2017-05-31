@@ -1,4 +1,4 @@
-﻿namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
+﻿namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic
 {
     public sealed class AppMemoryUsageLimitChangingEventArgs
     {

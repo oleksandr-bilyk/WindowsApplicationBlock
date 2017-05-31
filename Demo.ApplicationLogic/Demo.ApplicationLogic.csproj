@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ApplicationLogicAbstractions\ApplicationLogicAbstractions.csproj" />
     <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions\ApplicationLogicAbstractions.csproj" />
     <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.ViewModel\Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions.csproj" />
   </ItemGroup>

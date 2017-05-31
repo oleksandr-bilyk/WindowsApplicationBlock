@@ -1,9 +1,9 @@
-﻿using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage;
+﻿using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.MainPage;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.UwpApp
+namespace Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication
 {
     public sealed partial class OrganisationDetails : UserControl
     {

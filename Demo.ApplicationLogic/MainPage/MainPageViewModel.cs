@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ViewDataModel;
-using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MemoryPreasure;
+using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ViewDataModel;
+using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.MemoryPreasure;
 using Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage
+namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.MainPage
 {
     public sealed class MainPageViewModel : ViewModelBase
     {

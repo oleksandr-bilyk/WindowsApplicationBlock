@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.UwpApp.Converters
+namespace Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication.Converters
 {
     public sealed class BooleanOppositeConverter : IValueConverter
     {

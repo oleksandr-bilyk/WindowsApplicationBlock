@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Tampleworks.WindowsApplicationBlock.Demo.AppLogic.ReportGeneration;
+using Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ReportGeneration;
 using Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic.MainPage
+namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.MainPage
 {
     public sealed class OrganisationReportGenerationViewModel : ViewModelBase
     {

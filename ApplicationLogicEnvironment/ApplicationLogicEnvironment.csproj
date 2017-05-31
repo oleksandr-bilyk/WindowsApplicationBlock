@@ -126,8 +126,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions\ApplicationLogicAbstractions.csproj">
-      <Project>{2883784e-634a-4321-996e-802dfeef00ce}</Project>
+    <ProjectReference Include="..\ApplicationLogicAbstractions\ApplicationLogicAbstractions.csproj">
+      <Project>{e79a56af-9444-4412-8def-fcf741d3ac22}</Project>
       <Name>ApplicationLogicAbstractions</Name>
     </ProjectReference>
   </ItemGroup>

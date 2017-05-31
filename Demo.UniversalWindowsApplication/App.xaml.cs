@@ -4,7 +4,7 @@ using Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.UwpApp
+namespace Tampleworks.WindowsApplicationBlock.Demo.UniversalWindowsApplication
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -46,9 +46,18 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.UwpApp
 
         private static Dictionary<Guid, Type> GetPageViewMap() => new Dictionary<Guid, Type>
         {
-            { Demo.AppLogic.MainPage.MainPageViewModelFactory.PageTypeId, typeof(MainPage) },
-            { Demo.AppLogic.OrganisationCentric.OrganisationCentricViewModelFactory.PageTypeId, typeof(OrganisationCentric.OrganisationCentricPageForSecondaryWindow) },
-            { Demo.AppLogic.OrganisationCentric.OrganisationCentricPageViewModelFactory.PageTypeId, typeof(OrganisationCentric.OrganisationCentricPageForMainWindow) },
+            {
+                ApplicationLogic.MainPage.MainPageViewModelFactory.PageTypeId,
+                typeof(MainPage)
+            },
+            {
+                ApplicationLogic.OrganisationCentric.OrganisationCentricViewModelFactory.PageTypeId,
+                typeof(OrganisationCentric.OrganisationCentricPageForSecondaryWindow)
+            },
+            {
+                ApplicationLogic.OrganisationCentric.OrganisationCentricPageViewModelFactory.PageTypeId,
+                typeof(OrganisationCentric.OrganisationCentricPageForMainWindow)
+            },
         };
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Tampleworks.WindowsApplicationBlock.Demo.AppLogic
+namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic
 {
     /// <summary>
     /// Some mock memory consumer for application logic.
