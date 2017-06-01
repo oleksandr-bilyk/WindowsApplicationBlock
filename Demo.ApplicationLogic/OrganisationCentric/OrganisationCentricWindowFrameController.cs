@@ -21,7 +21,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.Organisation
             this.viewAgent = viewAgent;
         }
 
-        IPageViewModelFactory IWindowFrameController.GetPageViewModelFactory() => 
+        IPageViewModelFactory IWindowFrameController.StartPageViewModelFactory => 
             new OrganisationCentricViewModelFactory(organisationData, viewModelDataProvider, viewAgent);
     }
 }

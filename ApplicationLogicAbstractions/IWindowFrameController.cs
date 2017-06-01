@@ -8,6 +8,6 @@
     /// </remarks>
     public interface IWindowFrameController
     {
-        IPageViewModelFactory GetPageViewModelFactory();
+        IPageViewModelFactory StartPageViewModelFactory { get; }
     }
 }

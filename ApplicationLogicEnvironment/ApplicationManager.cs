@@ -61,7 +61,7 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
             {
                 var applicaitonLogicFactory = getApplicationLogicFactory.Invoke();
                 applicationLogicAgent = new ApplicationLogicAgent(
-                    e.Arguments, extendedExecutionManager, DisposeViewAsync, OpenNewViewAsync);
+                    e.Arguments, extendedExecutionManager, ResetViewAsync, OpenNewViewAsync);
                 applicaitonLogic = applicaitonLogicFactory.GetApplicationLogic(applicationLogicAgent);
             }
 
@@ -148,13 +148,13 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
         /// <summary>
         /// Reduce memory ussage by unloading View/ViewModel layers.
         /// </summary>
-        public async Task DisposeViewAsync()
+        public async Task ResetViewAsync()
         {
             if (!isInBackgroundMode) throw new InvalidOperationException();
 
             foreach (var item in views)
             {
-                await item.ClearContent();
+                await item.ResetContent();
             }
         }
 

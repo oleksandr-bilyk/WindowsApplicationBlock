@@ -13,14 +13,14 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions
         /// <remarks>https://docs.microsoft.com/en-us/windows/uwp/launch-resume/app-lifecycle</remarks>
         event Action EnteredBackground;
         event Action LeavingBackground;
-        /// <summary>
-        /// OnSuspent from Application class.
-        /// </summary>
         event Action Suspension;
         event Action Resument;
         event Action AppMemoryUsageLevelUpdated;
 
-        Task DisposeViewAsync();
-        Task<bool> OpenNewViewAsync(IWindowFrameControllerFactory windowFrameControllerFactory);
+        /// <summary>
+        /// Sets all opened windows containt to null.
+        /// </summary>
+        Task ResetViewAsync();
+        Task<bool> OpenNewSecondaryViewAsync(IWindowFrameControllerFactory windowFrameControllerFactory);
     }
 }

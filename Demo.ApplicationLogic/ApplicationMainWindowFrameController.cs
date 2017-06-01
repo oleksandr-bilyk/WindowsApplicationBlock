@@ -21,6 +21,6 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic
             this.applicationAgent = applicationAgent;
         }
 
-        public IPageViewModelFactory GetPageViewModelFactory() => new MainPageViewModelFactory(viewAgent, viewModelDataProvider, applicationAgent);
+        public IPageViewModelFactory StartPageViewModelFactory => new MainPageViewModelFactory(viewAgent, viewModelDataProvider, applicationAgent);
     }
 }

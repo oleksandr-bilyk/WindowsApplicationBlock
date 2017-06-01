@@ -72,7 +72,7 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
 
                     currentFrame = NewFrame();
 
-                    IPageViewModelFactory pageViewModelFactory = controller.Value.GetPageViewModelFactory();
+                    IPageViewModelFactory pageViewModelFactory = controller.Value.StartPageViewModelFactory;
                     pageViewModelNavigator.NavigatePageToFrame(pageViewModelFactory, currentFrame);
                     window.Content = currentFrame;
 
@@ -99,28 +99,18 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
 
         }
 
-        internal void RiseViewClosing() => agent.OnViewClosing();
+        internal void RiseViewClosing() => agent.OnViewDisposing();
         internal void RiseSuspending() => agent.OnSuspending();
         internal void RiseResument() => agent.OnResument();
         internal void RiseEnteredBackground() => agent.OnEnteredBackground();
         internal void RiseLeavingBackground() => agent.OnLeavingBackground();
 
-        internal async Task ClearContent()
+        internal async Task ResetContent()
         {
             await window.Dispatcher.RunAsync(
                 CoreDispatcherPriority.Normal,
                 () =>
                 {
-                    try
-                    {
-                        agent.OnViewClosing();
-                    }
-                    catch
-                    {
-                        Debug.Fail("ViewModel detach failed.");
-                        throw new InvalidOperationException();
-                    }
-
                     window.Content = null;
                 }
             );

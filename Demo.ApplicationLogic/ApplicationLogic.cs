@@ -69,7 +69,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic
                 var memoryBeforeRelease = memoryManager.AppMemoryUsage;
                 /// In this case when memory limit reached first of all we release View/ViewModel
                 /// layers and only then release memory preasure.
-                await applicationAgent.DisposeViewAsync();
+                await applicationAgent.ResetViewAsync();
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
                 await Task.Delay(1000);// Wait untill window thread will release 

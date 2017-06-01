@@ -74,7 +74,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.MainPage
 
             var organisationData = ItemSelected.Data;
 
-            bool opened = await applicationAgent.OpenNewViewAsync(
+            bool opened = await applicationAgent.OpenNewSecondaryViewAsync(
                 new OrganisationCentric.OrganisationCentricWindowFrameControllerFactory(
                     organisationData,
                     viewModelDataProvider

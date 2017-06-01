@@ -23,6 +23,8 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions
         /// OnSuspent from Application class.
         /// </summary>
         event Action Suspension;
+        event Action Resument;
+
         /// <summary>
         /// View is unloaded in background by memory preasure.
         /// </summary>
@@ -30,6 +32,5 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions
         /// ViewModel should unsubscribe from DataModel to avoid memory leak.
         /// </remarks>
         event Action ViewDisposing;
-        event Action Resument;
     }
 }

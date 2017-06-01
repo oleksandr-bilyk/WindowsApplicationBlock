@@ -30,7 +30,7 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
         public event Action ViewDisposing;
         public event Action Resument;
 
-        internal void OnViewClosing() => ViewDisposing?.Invoke();
+        internal void OnViewDisposing() => ViewDisposing?.Invoke();
         internal void OnEnteredBackground() => EnteredBackground?.Invoke();
 
         internal void OnLeavingBackground() => LeavingBackground?.Invoke();

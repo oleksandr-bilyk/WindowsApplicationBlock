@@ -6,7 +6,7 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
 {
     internal sealed class ApplicationLogicAgent : IApplicationLogicAgent
     {
-        private readonly Func<Task> disposeViewAsync;
+        private readonly Func<Task> resetViewAsync;
         private readonly OpenNewViewAsyncHandler openNewViewAsync;
 
         public ApplicationLogicAgent(
@@ -18,7 +18,7 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
         {
             Arguments = arguments;
             ExtendedExecutionSessionFactory = extendedExecutionManager;
-            this.disposeViewAsync = disposeViewAsync;
+            this.resetViewAsync = disposeViewAsync;
             this.openNewViewAsync = openNewViewAsync;
         }
 
@@ -37,8 +37,8 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
         internal void OnResument() => Resument?.Invoke();
         internal void OnAppMemoryUsageLevelUpdated() => AppMemoryUsageLevelUpdated?.Invoke();
 
-        public Task DisposeViewAsync() => disposeViewAsync();
-        public async Task<bool> OpenNewViewAsync(IWindowFrameControllerFactory windowFrameControllerFactory) =>
+        public Task ResetViewAsync() => resetViewAsync();
+        public async Task<bool> OpenNewSecondaryViewAsync(IWindowFrameControllerFactory windowFrameControllerFactory) =>
             await openNewViewAsync(windowFrameControllerFactory);
     }
 }

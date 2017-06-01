@@ -22,7 +22,6 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.MainPage
         )
         {
             this.viewAgent = viewAgent;
-            this.viewAgent.ViewDisposing += /* this is the way to be notified about view dispose by meomry preasure */ ViewAgent_ViewDisposing;
             this.viewModelDataProvider = viewModelDataProvider;
             this.applicationAgent = applicationAgent;
             this.applicationAgent.EnteredBackground += /* ViewModel may be notified about entering background using application logic agent */ApplicationAgent_EnteredBackground;
