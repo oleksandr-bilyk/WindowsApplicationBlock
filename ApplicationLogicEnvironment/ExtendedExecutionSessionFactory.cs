@@ -5,6 +5,9 @@ using Windows.ApplicationModel.ExtendedExecution;
 
 namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
 {
+    /// <summary>
+    /// Provides extended execution session for applicaiton logic.
+    /// </summary>
     internal sealed class ExtendedExecutionSessionFactory : IExtendedExecutionSessionFactory
     {
         public ExtendedExecutionSessionFactory() { }

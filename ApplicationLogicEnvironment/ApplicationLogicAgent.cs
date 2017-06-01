@@ -35,5 +35,9 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
         internal void OnAppMemoryUsageLevelUpdated() => AppMemoryUsageLevelUpdated?.Invoke();
 
         public Task DisposeViewAsync() => disposeViewAsync();
+        public Task<bool> OpenNewViewAsync(IWindowFrameControllerFactory windowFrameControllerFactory)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

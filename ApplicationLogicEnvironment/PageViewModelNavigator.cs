@@ -8,6 +8,10 @@ using Windows.UI.Xaml.Controls;
 
 namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
 {
+    /// <summary>
+    /// Navigates frame to page provided by 
+    /// Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions.IPageViewModelFactory interface.
+    /// </summary>
     internal sealed class PageViewModelNavigator
     {
         private readonly Func<Guid, Type> getPageTypeByPageId;

@@ -21,5 +21,6 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions
         event Action AppMemoryUsageLevelUpdated;
 
         Task DisposeViewAsync();
+        Task<bool> OpenNewViewAsync(IWindowFrameControllerFactory windowFrameControllerFactory);
     }
 }

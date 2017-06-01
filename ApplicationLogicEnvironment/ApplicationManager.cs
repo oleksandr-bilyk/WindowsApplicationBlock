@@ -19,13 +19,14 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
         private readonly Application application;
         private readonly Func<Guid, Type> getPageTypeByPageId;
         private readonly ExtendedExecutionSessionFactory extendedExecutionManager;
-        private ApplicationLogicContext applicationLogicContext;
         private bool isInBackgroundMode = true;
         private readonly ConcurrentQueue<TaskCompletionSource<Window>> taskWrappers = new ConcurrentQueue<TaskCompletionSource<Window>>();
         /// <summary>
         /// Current applicaiton viewmodel agent used to notify and dispose view layer.
         /// </summary>
         private ViewsManager windowsManger;
+        private ApplicationLogicAgent applicationLogicAgent;
+        private IApplicationLogic applicaitonLogic;
 
         public ApplicationManager(
             Func<IApplicationLogicFactory> getApplicationLogicFactory,
@@ -45,12 +46,11 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
 
         public async void OnLaunched(LaunchActivatedEventArgs e)
         {
-            if (applicationLogicContext == null)
+            if (applicaitonLogic == null)
             {
                 var applicaitonLogicFactory = getApplicationLogicFactory.Invoke();
-                var applicationLogicAgent = new ApplicationLogicAgent(e.Arguments, extendedExecutionManager, DisposeViewAsync);
-                var applicaitonLogic = applicaitonLogicFactory.GetApplicationLogic(applicationLogicAgent);
-                applicationLogicContext = new ApplicationLogicContext(applicationLogicAgent, applicaitonLogic);
+                applicationLogicAgent = new ApplicationLogicAgent(e.Arguments, extendedExecutionManager, DisposeViewAsync);
+                applicaitonLogic = applicaitonLogicFactory.GetApplicationLogic(applicationLogicAgent);
             }
 
             if (e.PreviousExecutionState == ApplicationExecutionState.Terminated || e.PreviousExecutionState == ApplicationExecutionState.ClosedByUser)
@@ -64,7 +64,7 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
 
             if (windowsManger == null)
             {
-                windowsManger = new ViewsManager(applicationLogicContext.ApplicaitonLogic.PrimaryWindowFrameControllerFactory, getPageTypeByPageId);
+                windowsManger = new ViewsManager(applicaitonLogic.PrimaryWindowFrameControllerFactory, getPageTypeByPageId);
             }
 
             if (e.PrelaunchActivated == false)
@@ -77,14 +77,14 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
         {
             var deferral = e.SuspendingOperation.GetDeferral();
 
-            applicationLogicContext.ApplicationLogicAgent.OnSuspending();
+            applicationLogicAgent.OnSuspending();
             windowsManger.OnSuspending();
             deferral.Complete();
         }
 
         private void OnResument(object sender, object e)
         {
-            applicationLogicContext.ApplicationLogicAgent.OnResument();
+            applicationLogicAgent.OnResument();
             windowsManger.OnResument();
         }
 
@@ -104,7 +104,7 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
             {
                 Debug.WriteLine("App_EnteredBackground");
                 isInBackgroundMode = true;
-                applicationLogicContext.ApplicationLogicAgent.OnEnteredBackground();
+                applicationLogicAgent.OnEnteredBackground();
                 windowsManger.OnEnteredBackground();
             }
 
@@ -113,7 +113,7 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
                 Debug.WriteLine("App_LeavingBackground");
                 isInBackgroundMode = false;
 
-                applicationLogicContext.ApplicationLogicAgent.OnLeavingBackground();
+                applicationLogicAgent.OnLeavingBackground();
 
                 await windowsManger.InitAllViews();
                 windowsManger.OnLeavingBackground();
