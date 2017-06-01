@@ -28,8 +28,7 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
         public ViewManager(
             CoreApplicationView coreApplicationView,
             PageViewModelNavigator pageViewModelNavigator,
-            IWindowFrameControllerFactory windowFrameControllerFactory,
-            OpenNewViewAsyncHandler openNewViewAsync
+            IWindowFrameControllerFactory windowFrameControllerFactory
         )
         {
             this.coreApplicationView = coreApplicationView;
@@ -37,7 +36,7 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
             Id = applicationView.Id;
             window = Window.Current;
             agent = new WindowFrameControllerAgent(
-                coreApplicationView.Dispatcher, openNewViewAsync, GetNavigation);
+                coreApplicationView.Dispatcher, GetNavigation);
             controller = new Lazy<IWindowFrameController>(NewController);
             this.pageViewModelNavigator = pageViewModelNavigator;
             this.windowFrameControllerFactory = windowFrameControllerFactory;

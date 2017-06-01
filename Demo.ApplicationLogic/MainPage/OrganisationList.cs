@@ -10,16 +10,19 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.MainPage
 {
     public sealed class OrganisationList : ViewModelBase
     {
+        private readonly IApplicationLogicAgent applicationAgent;
         private readonly IWindowFrameControllerAgent viewAgent;
         private readonly IViewModelDataProvider viewModelDataProvider;
         private OrganisationTitleViewModel itemSelected;
 
         public OrganisationList(
+            IApplicationLogicAgent applicationAgent,
             IWindowFrameControllerAgent viewAgent,
             List<OrganisationTitle> organisationList,
             IViewModelDataProvider viewModelDataProvider
         )
         {
+            this.applicationAgent = applicationAgent;
             this.viewAgent = viewAgent;
             this.viewModelDataProvider = viewModelDataProvider;
             this.ItemCollection = (from item in organisationList select new OrganisationTitleViewModel(viewAgent, item, viewModelDataProvider)).ToList();
@@ -41,12 +44,13 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.MainPage
         }
 
         internal static async Task<OrganisationList> LoadAsync(
+            IApplicationLogicAgent applicationAgent,
             IWindowFrameControllerAgent viewAgent, 
             IViewModelDataProvider viewModelDataProvider
         )
         {
             var data = await viewModelDataProvider.GetOrganisationTitleListAsync();
-            return new OrganisationList(viewAgent, data, viewModelDataProvider);
+            return new OrganisationList(applicationAgent, viewAgent, data, viewModelDataProvider);
         }
 
         public void NavigateToOrganisation()
@@ -70,7 +74,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.MainPage
 
             var organisationData = ItemSelected.Data;
 
-            bool opened = await viewAgent.OpenNewViewAsync(
+            bool opened = await applicationAgent.OpenNewViewAsync(
                 new OrganisationCentric.OrganisationCentricWindowFrameControllerFactory(
                     organisationData,
                     viewModelDataProvider

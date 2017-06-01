@@ -10,7 +10,6 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions
     {
         Task ShowMessageBoxOkAsync(string content);
         Task RunInViewDispatcherAsync(Action action);
-        Task<bool> OpenNewViewAsync(IWindowFrameControllerFactory windowFrameControllerFactory);
         Task<StringContentDialogResult> ShowStringContentDialog(ContentDialogParameters parameters);
         IWindowFrameNavigationAgent Navigation { get; }
 

@@ -60,7 +60,8 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
             if (applicaitonLogic == null)
             {
                 var applicaitonLogicFactory = getApplicationLogicFactory.Invoke();
-                applicationLogicAgent = new ApplicationLogicAgent(e.Arguments, extendedExecutionManager, DisposeViewAsync);
+                applicationLogicAgent = new ApplicationLogicAgent(
+                    e.Arguments, extendedExecutionManager, DisposeViewAsync, OpenNewViewAsync);
                 applicaitonLogic = applicaitonLogicFactory.GetApplicationLogic(applicationLogicAgent);
             }
 
@@ -127,8 +128,7 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
 
         private ViewManager NewViewManager(CoreApplicationView coreApplicationView, IWindowFrameControllerFactory windowFrameControllerFactory)
         {
-            var windowControllerContext = new ViewManager(
-                coreApplicationView, pageViewModelNavigator, windowFrameControllerFactory, OpenNewViewAsync);
+            var windowControllerContext = new ViewManager(coreApplicationView, pageViewModelNavigator, windowFrameControllerFactory);
 
             windowControllerContext.Consolidated += ApplicationView_Consolidated;
             void ApplicationView_Consolidated(ApplicationView sender, ApplicationViewConsolidatedEventArgs args)

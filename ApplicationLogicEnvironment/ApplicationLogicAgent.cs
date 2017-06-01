@@ -7,16 +7,19 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
     internal sealed class ApplicationLogicAgent : IApplicationLogicAgent
     {
         private readonly Func<Task> disposeViewAsync;
+        private readonly OpenNewViewAsyncHandler openNewViewAsync;
 
         public ApplicationLogicAgent(
             string arguments,
             ExtendedExecutionSessionFactory extendedExecutionManager,
-            Func<Task> disposeViewAsync
+            Func<Task> disposeViewAsync,
+            OpenNewViewAsyncHandler openNewViewAsync
         )
         {
             Arguments = arguments;
             ExtendedExecutionSessionFactory = extendedExecutionManager;
             this.disposeViewAsync = disposeViewAsync;
+            this.openNewViewAsync = openNewViewAsync;
         }
 
         public string Arguments { get; }
@@ -35,9 +38,7 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
         internal void OnAppMemoryUsageLevelUpdated() => AppMemoryUsageLevelUpdated?.Invoke();
 
         public Task DisposeViewAsync() => disposeViewAsync();
-        public Task<bool> OpenNewViewAsync(IWindowFrameControllerFactory windowFrameControllerFactory)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<bool> OpenNewViewAsync(IWindowFrameControllerFactory windowFrameControllerFactory) =>
+            await openNewViewAsync(windowFrameControllerFactory);
     }
 }

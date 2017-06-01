@@ -76,7 +76,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.MainPage
 
         private async Task LoadOrganisationsAsync(IWindowFrameControllerAgent viewAgent, IViewModelDataProvider viewModelDataProvider)
         {
-            OrganisationList viewModel = await OrganisationList.LoadAsync(viewAgent, this.viewModelDataProvider);
+            OrganisationList viewModel = await OrganisationList.LoadAsync(applicationAgent, viewAgent, this.viewModelDataProvider);
             await viewAgent.RunInViewDispatcherAsync(
                 () =>
                 {

@@ -9,17 +9,14 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
 {
     internal sealed class WindowFrameControllerAgent : IWindowFrameControllerAgent
     {
-        private readonly OpenNewViewAsyncHandler openNewViewAsyncHandler;
         private readonly Lazy<IWindowFrameNavigationAgent> navigation;
 
         public WindowFrameControllerAgent(
             CoreDispatcher dispatcher,
-            OpenNewViewAsyncHandler openNewViewAsyncHandler,
             Func<IWindowFrameNavigationAgent> getNavigation
         )
         {
             this.Dispatcher = dispatcher;
-            this.openNewViewAsyncHandler = openNewViewAsyncHandler;
             navigation = new Lazy<IWindowFrameNavigationAgent>(getNavigation);
         }
 
@@ -40,12 +37,8 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
         internal void OnSuspending() => Suspension?.Invoke();
         internal void OnResument() => Resument?.Invoke();
 
-        public Task<bool> OpenNewViewAsync(IWindowFrameControllerFactory windowFrameControllerFactory) => openNewViewAsyncHandler(windowFrameControllerFactory);
-
-        public async Task RunInViewDispatcherAsync(Action action)
-        {
+        public async Task RunInViewDispatcherAsync(Action action) =>
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => action());
-        }
 
         public async Task ShowMessageBoxOkAsync(string content)
         {
