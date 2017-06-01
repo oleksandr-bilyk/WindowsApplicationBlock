@@ -1,6 +1,6 @@
 This is some gasic text.
 ========================
-#Primary header
+# Primary header
 Some text under primary header.
-##Secondary header
+## Secondary header
 Some text under secondary header.
