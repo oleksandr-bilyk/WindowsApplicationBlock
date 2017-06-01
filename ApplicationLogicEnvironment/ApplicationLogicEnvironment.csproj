@@ -114,7 +114,6 @@
     <Compile Include="PageViewModelNavigator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewManager.cs" />
-    <Compile Include="ViewsManager.cs" />
     <Compile Include="WindowFrameControllerAgent.cs" />
     <Compile Include="WindowFrameNavigationAgent.cs" />
     <EmbeddedResource Include="Properties\Tampleworks.WindowsApplicationBlock.WindowsUniversalView.rd.xml" />

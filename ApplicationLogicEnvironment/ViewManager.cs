@@ -11,6 +11,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
 {
+    /// <summary>
+    /// Manages one View/Window lifecycle.
+    /// </summary>
     internal sealed class ViewManager
     {
         private readonly CoreApplicationView coreApplicationView;
@@ -19,6 +22,8 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
         private readonly Lazy<IWindowFrameController> controller;
         private bool isFirstInitialization = true;
         private Frame currentFrame;
+        private readonly Window window;
+        private readonly WindowFrameControllerAgent agent;
 
         public ViewManager(
             CoreApplicationView coreApplicationView,
@@ -30,8 +35,8 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
             this.coreApplicationView = coreApplicationView;
             var applicationView = ApplicationView.GetForCurrentView();
             Id = applicationView.Id;
-            Window = Window.Current;
-            Agent = new WindowFrameControllerAgent(
+            window = Window.Current;
+            agent = new WindowFrameControllerAgent(
                 coreApplicationView.Dispatcher, openNewViewAsync, GetNavigation);
             controller = new Lazy<IWindowFrameController>(NewController);
             this.pageViewModelNavigator = pageViewModelNavigator;
@@ -40,6 +45,11 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
             applicationView.Consolidated += OnConsolidated;
         }
 
+        internal int Id { get; }
+
+        internal event Action<ApplicationView, ApplicationViewConsolidatedEventArgs> Consolidated;
+
+        #region Methods
         private IWindowFrameNavigationAgent GetNavigation() =>
             new WindowFrameNavigationAgent(pageViewModelNavigator, currentFrame);
 
@@ -49,12 +59,8 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
             return pageViewModelNavigator.NavigatePageToFrame(viewModelFactory, currentFrame);
         }
 
-        private IWindowFrameController NewController() => windowFrameControllerFactory.GetWindowFrameController(Agent);
+        private IWindowFrameController NewController() => windowFrameControllerFactory.GetWindowFrameController(agent);
 
-        public int Id { get; }
-        public Window Window { get; }
-        public WindowFrameControllerAgent Agent { get; }
-        public event Action<ApplicationView, ApplicationViewConsolidatedEventArgs> Consolidated;
         private void OnConsolidated(ApplicationView sender, ApplicationViewConsolidatedEventArgs args) => Consolidated?.Invoke(sender, args);
 
         internal async Task InitContent()
@@ -63,13 +69,13 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
                 CoreDispatcherPriority.Normal,
                 () =>
                 {
-                    if (Window.Content != null) return;
+                    if (window.Content != null) return;
 
                     currentFrame = NewFrame();
 
                     IPageViewModelFactory pageViewModelFactory = controller.Value.GetPageViewModelFactory();
                     pageViewModelNavigator.NavigatePageToFrame(pageViewModelFactory, currentFrame);
-                    Window.Content = currentFrame;
+                    window.Content = currentFrame;
 
                     if (isFirstInitialization)
                     {
@@ -91,18 +97,24 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
 
         private void Frame_Navigating(object sender, NavigatingCancelEventArgs e)
         {
-            
+
         }
+
+        internal void RiseViewClosing() => agent.OnViewClosing();
+        internal void RiseSuspending() => agent.OnSuspending();
+        internal void RiseResument() => agent.OnResument();
+        internal void RiseEnteredBackground() => agent.OnEnteredBackground();
+        internal void RiseLeavingBackground() => agent.OnLeavingBackground();
 
         internal async Task ClearContent()
         {
-            await Window.Dispatcher.RunAsync(
+            await window.Dispatcher.RunAsync(
                 CoreDispatcherPriority.Normal,
                 () =>
                 {
                     try
                     {
-                        Agent.OnViewClosing();
+                        agent.OnViewClosing();
                     }
                     catch
                     {
@@ -110,9 +122,10 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
                         throw new InvalidOperationException();
                     }
 
-                    Window.Content = null;
+                    window.Content = null;
                 }
             );
-        }
+        } 
+        #endregion
     }
 }
