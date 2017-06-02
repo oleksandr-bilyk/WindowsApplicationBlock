@@ -4,3 +4,4 @@ This is some gasic text.
 Some text under primary header.
 ## Secondary header
 Some text under secondary header.
+-----------------------------------
