@@ -79,4 +79,21 @@ Solution also contains two Demo application projects:
   * Dependency Injection composition root.
   * Map providing to get XAML Page by view model.
 # From `IApplicationLogicFactory` to `IPageViewModelFactory` implementation
-`IApplicationLogicFactory` is the starting point of application used by `ApplicationLogicEnvironment`. `IApplicationLogicFactory` provides `IApplicationLogic` - the root application logic object. `IApplicationLogic` object may be constructed using `IApplicationLogicAgent`. The simplest `IApplicationLogicFactory` may have default constructor and construct `IApplicaitonLogic` instance. In `Demo.UniversalWindowsApplication` project sample `ApplicationLogicFactory` is constructed by Dependency Injection Composition Root and gets additional arguments like `ISemanticLogger` interface.
+* `IApplicationLogicFactory` is the starting point of application used by `ApplicationLogicEnvironment`. `IApplicationLogicFactory` provides `IApplicationLogic` - the root application logic object. `IApplicationLogic` object may be constructed using `IApplicationLogicAgent`. The simplest `IApplicationLogicFactory` may have default constructor and construct `IApplicaitonLogic` instance. In `Demo.UniversalWindowsApplication` project sample `ApplicationLogicFactory` is constructed by Dependency Injection Composition Root and gets additional arguments like `ISemanticLogger` interface.
+* `IApplicationLogicAgent` provides all control over Application Logic Environment like application lifecycle. `ApplicationLogicAgent` also allows to open new UWP Views/Windows.
+* `IApplicationLogic` - is the most long leaving application logic object because it exists until UWP application termination. That's why it may store shared data state that may survive even after View layer unload. `IApplicationLogic` provides `IWindowFrameControllerFactory` only for primary UWP View/Window. Application logic may start secondary windows using `IApplicationLogicAgent.OpenNewSecondaryViewAsync` method later according to [Show multiple views guide](https://docs.microsoft.com/en-us/windows/uwp/layout/show-multiple-views).
+* `IWindowFrameControllerFactory` provides `IWindowFrameController`. `IWindowFrameController` object may be constructed using `IWindowFrameControllerAgent`.
+* `IWindowFrameControllerAgent` - manages window content and executes tasks in View/Windows thread [dispatcher](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Core.CoreDispatcher). The agent also may show View dialogs.
+* `IWindowFrameController` is constructed to control window content. `IWindowFrameController` provides `IPageViewModelFactory` to provide initial window page. Application block assumes that UWP window always has [Frame](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.Frame) as root visual tree element and it needs [Page](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.Page) for initial navigation.
+* `IPageViewModelFactory` provides page view model and identifies view to associate with view model type. This interface is used to navigate [Frame](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.Frame) to [Page](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.Page) using `Windows.UI.Xaml.Controls.Frame.Navigate(Type sourcePageType, object parameter)` method.
+
+Essence of relations between main abstractions may be described as:
+1. DI composition root provides `IApplicationLogicFactory`
+1. `IApplicationLogicFactory` + `IApplicationLogicAgent` =>  `IApplicationLogic`
+1. `IApplicationLogic.PrimaryWindowFrameControllerFactory` + `IWindowFrameControllerAgent` => `IWindowFrameController`
+1. `IWindowFrameController.StartPageViewModelFactory` provides ViewModel mand Page View identifier.
+## Using ApplicationManager to control application execution
+To use this application block you should instantiate `ApplicationManager` and call its `ApplicationManager.OnLaunched` method from `Windows.UI.Xaml.Application.OnLaunched` method. `ApplicationManager` will subscribe to `Application` object events and will control application execution. `ApplicationManager` constructor takes following arguments:
+1. `IApplicationLogicFactory` implementation to build application logic object.
+1. `Windows.UI.Xaml.Application` instance.
+1. `Func\<Guid, Type>` to get view type by view identifier associated in `IPageViewModelFactory`.
