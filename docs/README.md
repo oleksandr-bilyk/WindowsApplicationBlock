@@ -3,6 +3,6 @@ Docs is some gasic text.
 # Primary header
 Some text under primary header.
 ## Secondary header
-Some text under secondary header.
+Some text under secondary header.!
 -----------------------------------
-![Mvvm schema](/docs/images/Mvvm.PNG)
+![Mvvm schema](/docs/images/Mvvm.PNG | width=30)
