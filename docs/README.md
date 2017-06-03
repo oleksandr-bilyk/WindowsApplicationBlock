@@ -27,6 +27,6 @@ Memory pleasure handling for me is advanced programming topic that was described
 * Jeffrey Richter "Windows via C/C++" [book](https://www.amazon.com/Windows-via-Jeffrey-M-Richter/dp/0735624240/ref=sr_1_1?s=books&ie=UTF8&qid=1496045667&sr=1-1&keywords=windows+via+c%2Fc)
 * Joe Duffy "Concurrent Programming on Windows" [book](https://www.amazon.com/Concurrent-Programming-Windows-Joe-Duffy/dp/032143482X/ref=asap_bc?ie=UTF8)
 * Kalen Delaney "Microsoft SQL Server 2012 Internals" [book](https://www.amazon.com/Microsoft-Server-Internals-Developer-Reference-ebook/dp/B00JDMQJYC/ref=asap_bc?ie=UTF8)
-<br />
+
 In classic Win application when your application is under memory pleasure, you may start getting `OutOfMomoryExceptions`. Additionally, UWP application may be suspended after rising [MemoryManager](https://docs.microsoft.com/en-us/uwp/api/Windows.System.MemoryManager).`AppMemoryUsageLimitChanging` event during background execution. The best sample of application where such approach may be used is SQL Server (extremely complex software) where memory is allocated as blocks (extends) and managed in very advanced way. When we are developing much simpler UWP application that attempts to free resources to don’t be suspended, application handle such case:
 
