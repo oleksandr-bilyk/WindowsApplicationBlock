@@ -128,7 +128,9 @@ public interface IApplicationMemoryManager
     ulong AppMemoryUsage { get; }
     event EventHandler<AppMemoryUsageLimitChangingEventArgs> AppMemoryUsageLimitChanging;
 }
+
 ...
+
 internal sealed class ApplicationMemoryManger : IApplicationMemoryManager
 {
     public ApplicationMemoryManger()
@@ -148,3 +150,48 @@ internal sealed class ApplicationMemoryManger : IApplicationMemoryManager
         );
 }
 ```
+`IPageViewModelFactory` interface implementation resides in `Demo.ApplicationLogic` project that doesn’t have reference to Page view but has to provide some [Guid](https://msdn.microsoft.com/en-us/library/system.guid(v=vs.110).aspx) identifier. `Demo.UniversalWindowsApplication` project contains [Page](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.Page) View XAML and can provide type save association between view identifier and View type.
+private static Dictionary<Guid, Type> GetPageViewMap() => new Dictionary<Guid, Type>
+```cs
+{
+    {
+        ApplicationLogic.MainPage.MainPageViewModelFactory.PageTypeId,
+        typeof(MainPage)
+    },
+    {
+        ApplicationLogic.OrganisationCentric.OrganisationCentricViewModelFactory.PageTypeId,
+        typeof(OrganisationCentric.OrganisationCentricPageForSecondaryWindow)
+    },
+    {
+        ApplicationLogic.OrganisationCentric.OrganisationCentricPageViewModelFactory.PageTypeId,
+        typeof(OrganisationCentric.OrganisationCentricPageForMainWindow)
+    },
+};
+```
+Such map should contain key-value pairs for all possible `IPageViewModelFactory` that may be navigated to.
+## XAML Page to ViewModel association
+Application block makes lots of windows and Frame Page navigation but few things like applying ViewModel to out page should be done manually in code behind.
+```cs
+public sealed partial class MainPage : Page
+{
+    public MainPage()
+    {
+        this.InitializeComponent();
+    }
+
+    public MainPageViewModel ViewModel { get; private set; }
+
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        base.OnNavigatedTo(e);
+
+        var prameter = (PageNavitedToParameters)e.Parameter;
+        ViewModel = (MainPageViewModel)prameter.ViewModel;
+    }
+}
+```
+## Lifecycle and Extended execution
+Application logic may be notified about all application lifecycle events from `IApplicationLogicAgent` evens: `Suspension`, `Resument`, `EnteredBackground`, `LeavingBackground`. These events are called directly from `Windows.UI.Xaml.Application` event handlers.
+`IApplicationLogicAgent` provides `IExtendedExecutionSessionFactory` used to request Extended Execution Session. All `ApplicationLogicAbstractions` contains abstraction to don't have direct coupling to UWP Extended Execution Session API. However `IExtendedExecutionSessionFactory` has the same limitation as UWP application and allows to create only one Extended Execution Session at one period of time. Attempt to open the second session before disposing the first one will rise `InvalidOperationException`. However application logic layer may create some utility to host multiple tasks. Depending on windows battery charge, energy save mode enable, "[Battery usage by app](http://www.howto-connect.com/customize-battery-usage-by-app-in-windows-10/)" settings and other OS factors, application may call `RequestExtensionAsync()` method and get `ExtendedExecutionResult.Denied`. It doesn't mean that without extended execution application should not allow user to execution some regular long running context that may be denied or revoked after start. `Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ExtendedExecutionTaskAgrigation` class provides such functionality to execute tasks under requested extended execution. Demo application contains sample of Report Generation logic that may be called with required or optional extended execution session. Every demo report generation  process may be observer on ViewModel and View layers with notification about changed revoked Extended Execution Session. Please see source code of `Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ReportGeneration.ReportGenerationAgent` class.
+## Memory pressure simulation when your app is in background
+[MSDN contains documentation](https://docs.microsoft.com/en-us/windows/uwp/launch-resume/reduce-memory-usage) how to handle [MemoryManager.AppMemoryUsageLimitChanging](https://docs.microsoft.com/en-us/uwp/api/Windows.System.MemoryManager) event during background execution. `Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ApplicationLogic` class uses injected `IApplicationMemoryManager` to monitor `AppMemoryUsageLimitChanging` event. Unfortunately it is very difficult to reproduce such event initiated by Windows in background execution. To simulate such process, demo application main window has Simulate button that will run memory pleasure handling logic in 10 seconds when application will be minimized.
