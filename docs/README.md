@@ -196,4 +196,4 @@ Application logic may be notified about all application lifecycle events from `I
 ## Memory pressure simulation when your app is in background
 [MSDN contains documentation](https://docs.microsoft.com/en-us/windows/uwp/launch-resume/reduce-memory-usage) how to handle [MemoryManager.AppMemoryUsageLimitChanging](https://docs.microsoft.com/en-us/uwp/api/Windows.System.MemoryManager) event during background execution. `Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.ApplicationLogic` class uses injected `IApplicationMemoryManager` to monitor `AppMemoryUsageLimitChanging` event. Unfortunately it is very difficult to reproduce such event initiated by Windows in background execution. To simulate such process, demo application main window has Simulate button that will run memory pleasure handling logic in 10 seconds when application will be minimized.
 
-<img src=/docs/images/ApplicationSimulateButton.PNG width=450 height=300 />
+<img src=/docs/images/ApplicationSimulateButton.png width=450 height=300 />
