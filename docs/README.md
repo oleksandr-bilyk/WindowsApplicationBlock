@@ -118,3 +118,33 @@ protected override void OnLaunched(LaunchActivatedEventArgs e)
     applicationManager.OnLaunched(e);
 }
 ```
+`IApplicationLogicFactory` is built by Dependency Injection Composition Root located in `CompositionRoot` class. 
+"The term Inversion of Control (IoC) originally meant any sort of programming style where an overall framework or runtime controlled the program flow." ([Martin Fowler, “InversionOfControl,” 2005](http://martinfowler.com/bliki/InversionOfControl.html))
+`ApplicationManager` class in combination with `IApplicationLogicFactory` implementation provides Inversion of Control mechanism because `ApplicationManager` controls `IApplicationLogic` execution flow. 
+`ApplicationManager` injects main UWP dependencies into `IApplicationLogicFactory` using agents e.g. `IApplicationLogicAgent` and `IWindowFrameControllerAgent`. If application logic needs some UWP specific functionality like `Windows.System.MemoryManager` class, developer may create some abstraction to get memory information in `Demo.ApplicationLogic` project, use it from application logic but implementation will reside it in `Demo.UniversalWindowsApplication` project.
+```cs
+public interface IApplicationMemoryManager
+{
+    ulong AppMemoryUsage { get; }
+    event EventHandler<AppMemoryUsageLimitChangingEventArgs> AppMemoryUsageLimitChanging;
+}
+...
+internal sealed class ApplicationMemoryManger : IApplicationMemoryManager
+{
+    public ApplicationMemoryManger()
+    {
+        MemoryManager.AppMemoryUsageLimitChanging += 
+            (sender, e) => OnAppMemoryUsageLimitChanging(e.NewLimit, e.OldLimit);
+    }
+
+    public ulong AppMemoryUsage => MemoryManager.AppMemoryUsage;
+
+    public event EventHandler<ApplicationLogic.AppMemoryUsageLimitChangingEventArgs> AppMemoryUsageLimitChanging;
+
+    private void OnAppMemoryUsageLimitChanging(ulong newLimit, ulong oldLimit) => 
+        AppMemoryUsageLimitChanging?.Invoke(
+            this, 
+            new ApplicationLogic.AppMemoryUsageLimitChangingEventArgs(newLimit, oldLimit)
+        );
+}
+```
