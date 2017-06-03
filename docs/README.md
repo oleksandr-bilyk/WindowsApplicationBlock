@@ -63,3 +63,8 @@ Demo application has following features:
 * View Model should be able to control View Frame/Pages navigation.
 * Logic that may be shared between few UWP applications should be extracted to application blocks.
 ## Solution Structure
+Application Logic term used in this article means everything related to application code what is not related to View layer and UWP. We may pick few synonyms as: Business Logic, Core Logic, Domain Logic. Application Logic contains ViewModel infrastructure. In this sample ViewModel has no coupling neither to UWP packages no View layer project.
+Solution contains 4 projects:
+
+<img src=/docs/images/SolutionDependency.PNG width=350 height=250 />
+
