@@ -41,6 +41,17 @@ Anyway, there are few ways of what application can do when [MemoryManager](https
 * Free some not required for minimal execution data controlled by Application Logic.
 * Unload View level objects according to [Guidelines](https://docs.microsoft.com/en-us/windows/uwp/launch-resume/reduce-memory-usage).
 ## MVVM in UWP context
-[MVVM as a pattern](https://msdn.m)icrosoft.com/en-us/library/hh848246.aspx) is very popular in XAML world.
+[MVVM as a pattern](https://msdn.microsoft.com/en-us/library/hh848246.aspx) is very popular in XAML world.
 
 <img src=/docs/images/Mvvm.PNG width=250 height=200 />
+
+In UWP on Windows 10 University Update (Build 14393) MVVM bindings may be implemented using new [x:Bind (Compiled Binding) markup extension](https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/x-bind-markup-extension). Compiled bindings usage improves performance and debugging experience but doesn't change MVVM principles. Compiled Event Binding usage is important nuance for layered MVVM architecture. MVVM ViewModel can be .NET Standard class without `System.Windows.Input.ICommand` interface usage from `Windows.Foundation.UniversalApiContract` UWP API contract.
+## Inversion-of-Control/Dependency Inversion/Dependency-Injection
+Dependency Inversion is one of fundamental SOLID principles to make application development process agile (in adjective meaning). The best source of understanding difference and relations between Inversion-of-Control/Dependency Inversion/Dependency-Injection temps is the book by Mark Seemann "Dependency Injection in .NET". Such strong books contains lost of nuances and basic DI implementation samples for different platforms e.g. WPF. However when we build DI for real UWP application we have much more complex relations like relation between some ViewModel that wants to show UWP OK/Cancel modal dialog.
+# UWP Application Block
+This article describes how Universal Application architectural topics, described above, may be combined in one solution.
+## Demo application requirements
+Demo application has following features:
+* Application domain logic should be built according to Inversion-of-Control and Dependency-Injection principles and has no coupling to UWP.
+* Ideally if application logic will reside in .NET Standard projects.
+* [Dependency Injection Composition Root](http://blog.ploeh.dk/2015/01/06/composition-root-reuse/) should be compatible with .NET Native that removes type metadata required for reflection. DI Containers use reflection to construct dependencies. That's why in UWP it is better to use Manual Composition Root implementation or register types and namespaces for reflection.
