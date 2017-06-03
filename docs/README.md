@@ -20,5 +20,4 @@ What did inspire Microsoft engineers to make such [lifecycle](https://docs.micro
   * return from task's incremental long running loop.
   * notify user with toast notification and continue execution without suspension protection.
 * End user knows nothing neither about sophisticated UWP lifecycle no about extended execution nuances. Regular user may change ["Battery usage by app"](http://www.howto-connect.com/customize-battery-usage-by-app-in-windows-10/) settings but that should not change foreground application execution user experience.
-<br />
 Developer should care about all these aspects if application may do some work after it was minimized.
