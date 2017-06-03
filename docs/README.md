@@ -1,4 +1,4 @@
-This is some gasic text.
+Docs is some gasic text.
 ========================
 # Primary header
 Some text under primary header.
