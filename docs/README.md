@@ -71,3 +71,11 @@ Solution contains 4 projects:
 Application block contains two reusable projects:
 1. `ApplicationLogicAbstractions` - Interfaces used by application logic to control environment.
 1. `ApplicationLogicEnvironment` - Simplifies UWP application initialization. Controls application execution starting from IApplicationLogicFactory object.
+
+Solution also contains two Demo application projects:
+1. `Demo.ApplicationLogic` - resides application logic. Application Logic starts its execution from `IApplicationLogicFactory` interface implementation.
+1. `Demo.UniversalWindowsApplication` - UWP application startup project contains:
+ * XAML and code behind files.
+ * Dependency Injection composition root.
+ * Map providing to get XAML Page by view model.
+# From `IApplicationLogicFactory` to `IPageViewModelFactory` implementation
