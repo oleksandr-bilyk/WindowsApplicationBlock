@@ -79,3 +79,4 @@ Solution also contains two Demo application projects:
   * Dependency Injection composition root.
   * Map providing to get XAML Page by view model.
 # From `IApplicationLogicFactory` to `IPageViewModelFactory` implementation
+`IApplicationLogicFactory` is the starting point of application used by `ApplicationLogicEnvironment`. `IApplicationLogicFactory` provides `IApplicationLogic` - the root application logic object. `IApplicationLogic` object may be constructed using `IApplicationLogicAgent`. The simplest `IApplicationLogicFactory` may have default constructor and construct `IApplicaitonLogic` instance. In `Demo.UniversalWindowsApplication` project sample `ApplicationLogicFactory` is constructed by Dependency Injection Composition Root and gets additional arguments like `ISemanticLogger` interface.
