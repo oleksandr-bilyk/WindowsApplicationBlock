@@ -5,7 +5,7 @@ There are few important UWP topics that should be reviewed to make architectural
 Microsoft had a chance to build application platform from scratch to meet all potential requirements to mobile applications in XXI century. Developers and other users expect that "Windows 10" will be renamed to "Windows" (number less) and user will not have to buy next OS. That may happen when Win10 market share will reach over 1 billion of users. Windows 10S - is the sample of such free OS where you will pay only for store applications. It is nice to see that Microsoft has a good will to do such innovations. In different Win10 annual builds we see permanent progress in UWP evolution.  
 UWP is very different than classic windows application. UWP as Win8-x/Win10 is part of Microsoft's "Mobile First and Cloud First" concept. UWP, as WinRT superset, has strong abstraction from core OS kernel process entity. In comparison to classic windows applications, API calls were referenced to WinRT interfaces. Theoretically, in next 5 years UWP may be ported to other OS platforms as Android.
 ## Lifecycle Start/Stop rethink
-UWP, first of all, differs from other application kinds in its lifetime. Classic UWP application has started/stopping lifecycle points available for handling from process code. To understand UWP lifecycle you should forget everything that you knew about application lifecycle. Basically, UWP has [Not Running, Running and Suspended states](https://docs.microsoft.com/en-us/windows/uwp/launch-resume/app-lifecycle). Additionally we may handle Foreground and Background states.
+UWP, first of all, differs from other application kinds in its lifetime. Classic UWP application has started/stopping lifecycle points available for handling from application code. To understand UWP lifecycle you should forget everything that you knew about application lifecycle. Basically, UWP has [Not Running, Running and Suspended states](https://docs.microsoft.com/en-us/windows/uwp/launch-resume/app-lifecycle). Additionally we may handle Foreground and Background states.
 
 <img src=/docs/images/Lifecycle.PNG width=300 height=200 />
 
@@ -24,17 +24,17 @@ What did inspire Microsoft engineers to make such [lifecycle](https://docs.micro
 
 Developer should care about all these aspects if application may do some work after it was minimized.
 ## Free memory when your app moves to the background
-Memory pleasure handling for me is advanced programming topic that was described in few good books like:
+Memory pleasure handling for me is an advanced programming topic that was described in few good books like:
 * Jeffrey Richter "Windows via C/C++" [book](https://www.amazon.com/Windows-via-Jeffrey-M-Richter/dp/0735624240/ref=sr_1_1?s=books&ie=UTF8&qid=1496045667&sr=1-1&keywords=windows+via+c%2Fc)
 * Joe Duffy "Concurrent Programming on Windows" [book](https://www.amazon.com/Concurrent-Programming-Windows-Joe-Duffy/dp/032143482X/ref=asap_bc?ie=UTF8)
 * Kalen Delaney "Microsoft SQL Server 2012 Internals" [book](https://www.amazon.com/Microsoft-Server-Internals-Developer-Reference-ebook/dp/B00JDMQJYC/ref=asap_bc?ie=UTF8)
 
-In classic Win application when your application is under memory pleasure, you may start getting `OutOfMomoryExceptions`. Additionally, UWP application may be suspended after rising [MemoryManager](https://docs.microsoft.com/en-us/uwp/api/Windows.System.MemoryManager).`AppMemoryUsageLimitChanging` event during background execution. The best sample of application where such approach may be used is SQL Server (extremely complex software) where memory is allocated as blocks (extends) and managed in very advanced way. When we are developing much simpler UWP application that attempts to free resources to don’t be suspended, application handle such case:
+In classic Win32 application under memory pleasure, you may start getting `OutOfMomoryExceptions`. Additionally, UWP application may be suspended after rising [MemoryManager](https://docs.microsoft.com/en-us/uwp/api/Windows.System.MemoryManager).`AppMemoryUsageLimitChanging` event during background execution. The best sample of application where such approach may be used is SQL Server (extremely complex software) where memory is allocated as blocks (extends) and managed in very advanced way. When we are developing much simpler UWP application that attempts to free resources to don’t be suspended, application handle such case:
 * According to MSDN guidelines app may [unload some data and View Layer](https://docs.microsoft.com/en-us/windows/uwp/launch-resume/reduce-memory-usage) if application is in background executions state.
 * Try to avoid executing critical work sections in Mobile applications to avoid problems. It is natural for UWP application to be suspended/resumed and most of application tasks execution will not be harmed by suspend.
-* Consider how your application layered architecture will work with releasing consumed RAM.
+* Consider how your application layered architecture should be designed to release consumed RAM.
 
-Idea of unloading View layers (setting windows content to null and сollecting all related memory) is very new. In UWP application View layer memory may be collected without [Application](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Application) class instance with permanently live objects.
+Idea of unloading View layer (setting windows content to `null` and сollecting all related memory) is very new. In UWP application View layer memory may be collected without [Application](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Application) class instance.
 How real is such situation in real world mobile application? On the beginning of 2017 Microsoft releases new Surface Pro and Surface Laptop devices with 4GB RAM. It is very real that some student will run some heavy application like Auto Cad and your application RAM limit will be decreased to 250MB. Other, more frequent sample, is when Xbox runs some heavy game that takes maximum RAM and the box will allow your application be alive only if your application will take 100MB maximum. Does it makes sense for your application to stay alive with minimal amount of RAM? Sometimes YES when you are developing Skype competitor that should hold minimal communication with online server. If your application also requires lots of ram and is not designed to release majority of it and restore it later on the move to foreground, maybe, it will make sense to let Windows to suspend your app and store its RAM to the disk.
 Anyway, there are few ways of what application can do when [MemoryManager](https://docs.microsoft.com/en-us/uwp/api/Windows.System.MemoryManager).`AppMemoryUsageLimitChanging` event will be riced with arguments warning about memory usage overflow:
 * Ignore this fact and expect that application will be suspended and even terminated.
@@ -47,7 +47,7 @@ Anyway, there are few ways of what application can do when [MemoryManager](https
 
 In UWP on Windows 10 University Update (Build 14393) MVVM bindings may be implemented using new [x:Bind (Compiled Binding) markup extension](https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/x-bind-markup-extension). Compiled bindings usage improves performance and debugging experience but doesn't change MVVM principles. Compiled Event Binding usage is important nuance for layered MVVM architecture. MVVM ViewModel can be .NET Standard class without `System.Windows.Input.ICommand` interface usage from `Windows.Foundation.UniversalApiContract` UWP API contract.
 ## Inversion-of-Control/Dependency Inversion/Dependency-Injection
-Dependency Inversion is one of fundamental SOLID principles to make application development process agile (in adjective meaning). The best source of understanding difference and relations between Inversion-of-Control/Dependency Inversion/Dependency-Injection temps is the book by Mark Seemann "Dependency Injection in .NET". Such strong books contains lost of nuances and basic DI implementation samples for different platforms e.g. WPF. However when we build DI for real UWP application we have much more complex relations like relation between some ViewModel that wants to show UWP OK/Cancel modal dialog.
+Dependency Inversion is one of fundamental SOLID principles to make application development process agile (in adjective meaning). It is useful to know the difference and relations between Inversion-of-Control/Dependency Inversion/Dependency-Injection terms. To lear better this topic we would recommend "Dependency Injection in .NET" book by Mark Seeman. This books contains lost of nuances and DI implementation samples for different platforms e.g. WPF.
 # UWP Application Block
 This article describes how Universal Application architectural topics, described above, may be combined in one solution.
 ## Demo application requirements
@@ -70,7 +70,7 @@ Solution contains 4 projects:
 
 Application block contains two reusable projects:
 1. `ApplicationLogicAbstractions` - Interfaces used by application logic to control environment.
-1. `ApplicationLogicEnvironment` - Simplifies UWP application initialization. Controls application execution starting from IApplicationLogicFactory object.
+1. `ApplicationLogicEnvironment` - Simplifies UWP application initialization. Controls application execution starting from `IApplicationLogicFactory` object.
 
 Solution also contains two Demo application projects:
 1. `Demo.ApplicationLogic` - resides application logic. Application Logic starts its execution from `IApplicationLogicFactory` interface implementation.
@@ -170,7 +170,7 @@ private static Dictionary<Guid, Type> GetPageViewMap() => new Dictionary<Guid, T
 ```
 Such map should contain key-value pairs for all possible `IPageViewModelFactory` that may be navigated to.
 ## XAML Page to ViewModel association
-Application block makes lots of windows and Frame Page navigation but few things like applying ViewModel to out page should be done manually in code behind.
+Application block makes lots of windows and Frame Page navigation but few things like applying ViewModel to out page should be done manually in Page code behind.
 ```cs
 public sealed partial class MainPage : Page
 {
@@ -198,6 +198,6 @@ Application logic may be notified about all application lifecycle events from `I
 
 <img src=/docs/images/ApplicationSimulateButton.png width=450 height=300 />
 
-To release view layer Application Logic calls `IApplicationLogicAgent.ResetViewAsync` method. Applciation Logic may  notify all View Models about such unload because view models are provided by Application Logic. All windows visual tree root elements will be set to `null`. After that application logic should call `GC.Collect` method to release managed objects. It is important to understand that view models provided byt `IPageViewModelFactory` will be collected if there will be no references from `IWindowFrameController`. Views content will be reconstructed again only when application will move to foreground. To restore views IWindowFrameController will provide `IPageViewModelFactory` again. Such lifecycle allows to reconstruct new View Models for opened windows or cache them on `IWindowFrameController` level.
+To release view layer Application Logic calls `IApplicationLogicAgent.ResetViewAsync` method. Applciation Logic may notify all View Models about such unload because view models are provided by Application Logic. All windows visual tree root elements will be set to `null`. After that application logic should call `GC.Collect` method to release managed objects. It is important to understand that view models provided byt `IPageViewModelFactory` will be collected if there will be no references from `IWindowFrameController`. Views content will be reconstructed again only when application will move to foreground. To restore views IWindowFrameController will provide `IPageViewModelFactory` again. Such lifecycle allows to reconstruct new View Models for opened windows or cache them on `IWindowFrameController` level.
 ## Secondary Windows
-`IApplicationLogicAgent` interface has `OpenNewSecondaryViewAsync` method that allows to open secondary window. `OpenNewSecondaryViewAsync` takes `IWindowFrameControllerFactory` to build `IWindowFrameController` for secondary window. Every window `IWindowFrameController` will have its own `IWindowFrameControllerAgent` to invoke View Model methods in window's View dispatcher.
+`IApplicationLogicAgent` interface has `OpenNewSecondaryViewAsync` method that allows to open secondary window. `OpenNewSecondaryViewAsync` takes `IWindowFrameControllerFactory` to build `IWindowFrameController` for secondary window. Each window's `IWindowFrameController` will have its own `IWindowFrameControllerAgent` to invoke View Model methods in window's View dispatcher.
