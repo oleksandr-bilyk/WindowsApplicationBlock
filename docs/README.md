@@ -40,3 +40,7 @@ Anyway, there are few ways of what application can do when [MemoryManager](https
 * Ignore this fact and expect that application will be suspended and even terminated.
 * Free some not required for minimal execution data controlled by Application Logic.
 * Unload View level objects according to [Guidelines](https://docs.microsoft.com/en-us/windows/uwp/launch-resume/reduce-memory-usage).
+## MVVM in UWP context
+[MVVM as a pattern](https://msdn.m)icrosoft.com/en-us/library/hh848246.aspx) is very popular in XAML world.
+
+<img src=/docs/images/Mvvm.PNG width=250 height=200 />
