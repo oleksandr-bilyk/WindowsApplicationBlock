@@ -55,3 +55,11 @@ Demo application has following features:
 * Application domain logic should be built according to Inversion-of-Control and Dependency-Injection principles and has no coupling to UWP.
 * Ideally if application logic will reside in .NET Standard projects.
 * [Dependency Injection Composition Root](http://blog.ploeh.dk/2015/01/06/composition-root-reuse/) should be compatible with .NET Native that removes type metadata required for reflection. DI Containers use reflection to construct dependencies. That's why in UWP it is better to use Manual Composition Root implementation or register types and namespaces for reflection.
+* Application logic should be aware about application lifecycle events.
+* Application logic should be able o work with [Extended Execution Session](https://docs.microsoft.com/en-us/windows/uwp/launch-resume/run-minimized-with-extended-execution).
+* Application logic is the long living part of process in comparison to View layer that [may be unloaded](https://docs.microsoft.com/en-us/windows/uwp/launch-resume/reduce-memory-usage).
+* Adapt ViewModel for Compiled bindings.
+* Control [primary and secondary UWP Views (Windows)](https://docs.microsoft.com/en-us/windows/uwp/layout/show-multiple-views) from application logic.
+* View Model should be able to control View Frame/Pages navigation.
+* Logic that may be shared between few UWP applications should be extracted to application blocks.
+## Solution Structure
