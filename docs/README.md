@@ -68,3 +68,6 @@ Solution contains 4 projects:
 
 <img src=/docs/images/SolutionDependency.PNG width=450 height=300 />
 
+Application block contains two reusable projects:
+1. `ApplicationLogicAbstractions` - Interfaces used by application logic to control environment.
+1. `ApplicationLogicEnvironment` - Simplifies UWP application initialization. Controls application execution starting from IApplicationLogicFactory object.
