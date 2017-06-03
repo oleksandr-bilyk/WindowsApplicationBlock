@@ -97,3 +97,24 @@ To use this application block you should instantiate `ApplicationManager` and ca
 1. `IApplicationLogicFactory` implementation to build application logic object.
 1. `Windows.UI.Xaml.Application` instance.
 1. `Func\<Guid, Type>` to get view type by view identifier associated in `IPageViewModelFactory`.
+```cs
+/// <summary>
+/// Invoked when the application is launched normally by the end user.  Other entry points
+/// will be used such as when the application is launched to open a specific file.
+/// </summary>
+/// <param name="e">Details about the launch request and process.</param>
+protected override void OnLaunched(LaunchActivatedEventArgs e)
+{
+    Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
+
+    if (applicationManager == null)
+    {
+        applicationManager = new ApplicationManager(
+            () => CompositionRoot.Instance.GetApplicationLogicFactory(),
+            this,
+            (Guid key) => pageViewMap.Value[key]
+        );
+    }
+    applicationManager.OnLaunched(e);
+}
+```
