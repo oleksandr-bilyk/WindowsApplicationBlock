@@ -20,7 +20,7 @@ What did inspire Microsoft engineers to make such [lifecycle](https://docs.micro
   * return from task's incremental long running loop.
   * notify user with toast notification and continue execution without suspension protection.
 * End user knows nothing neither about sophisticated UWP lifecycle no about extended execution nuances. Regular user may change ["Battery usage by app"](http://www.howto-connect.com/customize-battery-usage-by-app-in-windows-10/) settings but that should not change foreground application execution user experience.
-<br />
+
 Developer should care about all these aspects if application may do some work after it was minimized.
 ## Free memory when your app moves to the background
 Memory pleasure handling for me is advanced programming topic that was described in few good books like:
@@ -29,4 +29,13 @@ Memory pleasure handling for me is advanced programming topic that was described
 * Kalen Delaney "Microsoft SQL Server 2012 Internals" [book](https://www.amazon.com/Microsoft-Server-Internals-Developer-Reference-ebook/dp/B00JDMQJYC/ref=asap_bc?ie=UTF8)
 
 In classic Win application when your application is under memory pleasure, you may start getting `OutOfMomoryExceptions`. Additionally, UWP application may be suspended after rising [MemoryManager](https://docs.microsoft.com/en-us/uwp/api/Windows.System.MemoryManager).`AppMemoryUsageLimitChanging` event during background execution. The best sample of application where such approach may be used is SQL Server (extremely complex software) where memory is allocated as blocks (extends) and managed in very advanced way. When we are developing much simpler UWP application that attempts to free resources to don’t be suspended, application handle such case:
+* According to MSDN guidelines app may [unload some data and View Layer](https://docs.microsoft.com/en-us/windows/uwp/launch-resume/reduce-memory-usage) if application is in background executions state.
+* Try to avoid executing critical work sections in Mobile applications to avoid problems. It is natural for UWP application to be suspended/resumed and most of application tasks execution will not be harmed by suspend.
+* Consider how your application layered architecture will work with releasing consumed RAM.
 
+Idea of unloading View layers (setting windows content to null and сollecting all related memory) is very new. In UWP application View layer memory may be collected without [Application](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Application) class instance with permanently live objects.
+How real is such situation in real world mobile application? On the beginning of 2017 Microsoft releases new Surface Pro and Surface Laptop devices with 4GB RAM. It is very real that some student will run some heavy application like Auto Cad and your application RAM limit will be decreased to 250MB. Other, more frequent sample, is when Xbox runs some heavy game that takes maximum RAM and the box will allow your application be alive only if your application will take 100MB maximum. Does it makes sense for your application to stay alive with minimal amount of RAM? Sometimes YES when you are developing Skype competitor that should hold minimal communication with online server. If your application also requires lots of ram and is not designed to release majority of it and restore it later on the move to foreground, maybe, it will make sense to let Windows to suspend your app and store its RAM to the disk.
+Anyway, there are few ways of what application can do when [MemoryManager](https://docs.microsoft.com/en-us/uwp/api/Windows.System.MemoryManager).`AppMemoryUsageLimitChanging` event will be riced with arguments warning about memory usage overflow:
+* Ignore this fact and expect that application will be suspended and even terminated.
+* Free some not required for minimal execution data controlled by Application Logic.
+* Unload View level objects according to [Guidelines](https://docs.microsoft.com/en-us/windows/uwp/launch-resume/reduce-memory-usage).
