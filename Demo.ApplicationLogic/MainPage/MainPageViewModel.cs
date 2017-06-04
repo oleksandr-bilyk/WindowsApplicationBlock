@@ -24,7 +24,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.MainPage
             this.viewAgent = viewAgent;
             this.viewModelDataProvider = viewModelDataProvider;
             this.applicationAgent = applicationAgent;
-            this.applicationAgent.EnteredBackground += /* ViewModel may be notified about entering background using application logic agent */ApplicationAgent_EnteredBackground;
+            this.applicationAgent.Lifecycle.EnteredBackground += /* ViewModel may be notified about entering background using application logic agent */ApplicationAgent_EnteredBackground;
             MemoryPreasureCriteria = new CriteriaViewModel(this.viewModelDataProvider, viewAgent);
 
             Task.Run(() => LoadOrganisationsAsync(viewAgent, viewModelDataProvider));
@@ -33,7 +33,7 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic.MainPage
         private void ViewAgent_ViewDisposing()
         {
             /// It is important to unsubscribe from Application Logic to avoid this object memory leak.
-            this.applicationAgent.EnteredBackground -= ApplicationAgent_EnteredBackground;
+            this.applicationAgent.Lifecycle.EnteredBackground -= ApplicationAgent_EnteredBackground;
         }
 
         private void ApplicationAgent_EnteredBackground() { }

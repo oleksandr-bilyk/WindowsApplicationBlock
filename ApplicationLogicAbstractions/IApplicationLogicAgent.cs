@@ -7,15 +7,7 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicAbstractions
     {
         string Arguments { get; }
         IExtendedExecutionSessionFactory ExtendedExecutionSessionFactory { get; }
-        /// <summary>
-        /// It is recommended to save state from here asynchronously.
-        /// </summary>
-        /// <remarks>https://docs.microsoft.com/en-us/windows/uwp/launch-resume/app-lifecycle</remarks>
-        event Action EnteredBackground;
-        event Action LeavingBackground;
-        event Action Suspension;
-        event Action Resument;
-        event Action AppMemoryUsageLevelUpdated;
+        IApplicationLifecycleAgent Lifecycle { get; }
 
         /// <summary>
         /// Sets all opened windows containt to null.

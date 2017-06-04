@@ -104,6 +104,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ApplicationLifecycleAgent.cs" />
     <Compile Include="ApplicationLogicAgent.cs" />
     <Compile Include="ApplicationManager.cs" />
     <Compile Include="ExtendedExecutionSessionFactory.cs" />

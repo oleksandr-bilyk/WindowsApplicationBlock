@@ -30,9 +30,10 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic
             this.memoryManager = memoryManager;
             this.logger = logger;
             memoryManager.AppMemoryUsageLimitChanging += MemoryManager_AppMemoryUsageLimitChanging;
-            applicationAgent.EnteredBackground += () => isInBackground = true;
-            applicationAgent.LeavingBackground += () => isInBackground = false;
-            applicationAgent.Suspension += () => { };
+            applicationAgent.Lifecycle.EnteredBackground += () => isInBackground = true;
+            applicationAgent.Lifecycle.LeavingBackground += () => isInBackground = false;
+            applicationAgent.Lifecycle.Suspension += () => { };
+            applicationAgent.Lifecycle.Resument += () => { };
             memoryController.AskApplicationToReleaseMemoryFromView += MemoryController_AskApplicationToReleaseMemoryFromView;
             extendedExecutionTaskAgrigation = new ExtendedExecutionTaskAgrigation(
                 applicationAgent.ExtendedExecutionSessionFactory, "Organisation data analysis.");

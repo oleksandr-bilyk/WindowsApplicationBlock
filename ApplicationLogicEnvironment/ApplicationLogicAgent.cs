@@ -13,29 +13,20 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
             string arguments,
             ExtendedExecutionSessionFactory extendedExecutionManager,
             Func<Task> disposeViewAsync,
-            OpenNewViewAsyncHandler openNewViewAsync
+            OpenNewViewAsyncHandler openNewViewAsync,
+            IApplicationLifecycleAgent lifecycle
         )
         {
             Arguments = arguments;
             ExtendedExecutionSessionFactory = extendedExecutionManager;
             this.resetViewAsync = disposeViewAsync;
             this.openNewViewAsync = openNewViewAsync;
+            Lifecycle = lifecycle;
         }
 
         public string Arguments { get; }
         public IExtendedExecutionSessionFactory ExtendedExecutionSessionFactory { get; }
-
-        public event Action EnteredBackground;
-        public event Action LeavingBackground;
-        public event Action Suspension;
-        public event Action Resument;
-        public event Action AppMemoryUsageLevelUpdated;
-
-        internal void OnEnteredBackground() => EnteredBackground?.Invoke();
-        internal void OnLeavingBackground() => LeavingBackground?.Invoke();
-        internal void OnSuspending() => Suspension?.Invoke();
-        internal void OnResument() => Resument?.Invoke();
-        internal void OnAppMemoryUsageLevelUpdated() => AppMemoryUsageLevelUpdated?.Invoke();
+        public IApplicationLifecycleAgent Lifecycle { get; }
 
         public Task ResetViewAsync() => resetViewAsync();
         public async Task<bool> OpenNewSecondaryViewAsync(IWindowFrameControllerFactory windowFrameControllerFactory) =>

@@ -29,6 +29,7 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
         private readonly PageViewModelNavigator pageViewModelNavigator;
         private ViewManager primaryViewManager;
         private List<ViewManager> views = new List<ViewManager>();
+        private readonly ApplicationLifecycleAgent applicationLifecycleAgent = new ApplicationLifecycleAgent();
 
         public ApplicationManager(
             Func<IApplicationLogicFactory> getApplicationLogicFactory,
@@ -61,7 +62,9 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
             {
                 var applicaitonLogicFactory = getApplicationLogicFactory.Invoke();
                 applicationLogicAgent = new ApplicationLogicAgent(
-                    e.Arguments, extendedExecutionManager, ResetViewAsync, OpenNewViewAsync);
+                    e.Arguments, extendedExecutionManager, ResetViewAsync, OpenNewViewAsync,
+                    applicationLifecycleAgent
+                );
                 applicaitonLogic = applicaitonLogicFactory.GetApplicationLogic(applicationLogicAgent);
             }
 
@@ -90,26 +93,26 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
         {
             var deferral = e.SuspendingOperation.GetDeferral();
 
-            applicationLogicAgent.OnSuspending();
+            applicationLifecycleAgent.OnSuspending();
             deferral.Complete();
         }
 
         private void OnResument(object sender, object e)
         {
-            applicationLogicAgent.OnResument();
+            applicationLifecycleAgent.OnResument();
         }
 
         void App_EnteredBackground(object sender, EnteredBackgroundEventArgs e)
         {
             isInBackgroundMode = true;
-            applicationLogicAgent.OnEnteredBackground();
+            applicationLifecycleAgent.OnEnteredBackground();
         }
 
         async void App_LeavingBackground(object sender, LeavingBackgroundEventArgs e)
         {
             isInBackgroundMode = false;
 
-            applicationLogicAgent.OnLeavingBackground();
+            applicationLifecycleAgent.OnLeavingBackground();
 
             await InitAllViews();
         }
