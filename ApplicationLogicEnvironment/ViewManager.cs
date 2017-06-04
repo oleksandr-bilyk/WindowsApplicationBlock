@@ -100,10 +100,6 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
         }
 
         internal void RiseViewClosing() => agent.OnViewDisposing();
-        internal void RiseSuspending() => agent.OnSuspending();
-        internal void RiseResument() => agent.OnResument();
-        internal void RiseEnteredBackground() => agent.OnEnteredBackground();
-        internal void RiseLeavingBackground() => agent.OnLeavingBackground();
 
         internal async Task ResetContent()
         {

@@ -24,18 +24,9 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
 
         public IWindowFrameNavigationAgent Navigation => navigation.Value;
 
-        public event Action EnteredBackground;
-        public event Action LeavingBackground;
-        public event Action Suspension;
         public event Action ViewDisposing;
-        public event Action Resument;
 
         internal void OnViewDisposing() => ViewDisposing?.Invoke();
-        internal void OnEnteredBackground() => EnteredBackground?.Invoke();
-
-        internal void OnLeavingBackground() => LeavingBackground?.Invoke();
-        internal void OnSuspending() => Suspension?.Invoke();
-        internal void OnResument() => Resument?.Invoke();
 
         public async Task RunInViewDispatcherAsync(Action action) =>
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => action());

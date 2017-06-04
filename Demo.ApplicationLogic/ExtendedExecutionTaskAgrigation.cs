@@ -51,41 +51,13 @@ namespace Tampleworks.WindowsApplicationBlock.Demo.ApplicationLogic
             Func<IExtendedExecutionTaskAgrigationArg, Task> taskFunc
         )
         {
-            var arg = new ExtendedExecutionTaskAgrigationArg(this);
-            try
-            {// Try get extended exectuion session
-                await syncRoot.WaitAsync();
-
-                if (extendedExecutionSession == null)
+            await ExecuteAsync<object>(
+                async (arg) =>
                 {
-                    extendedExecutionSession = await extendedExecutionSessionFactory.TryRequestAsync(sessionDeskription, Revoke);
+                    await taskFunc(arg);
+                    return null;
                 }
-                parallelExecutions.Add(arg);
-                UpdateAllTasksInExtendedExecution();
-            }
-            finally { syncRoot.Release(); }
-
-            try
-            {// Strategy execution
-                await taskFunc(arg);
-            }
-            finally
-            {
-                try
-                {// release extended exectuion session
-                    await syncRoot.WaitAsync();
-
-                    parallelExecutions.Remove(arg);
-
-                    if (parallelExecutions.Count == 0 && extendedExecutionSession != null)
-                    {
-                        extendedExecutionSession.Dispose();
-                        extendedExecutionSession = null;
-                    }
-                    UpdateAllTasksInExtendedExecution();
-                }
-                finally { syncRoot.Release(); }
-            }
+            );
         }
 
         public async Task<TResult> ExecuteAsync<TResult>(

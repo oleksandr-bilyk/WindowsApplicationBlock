@@ -91,21 +91,18 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
             var deferral = e.SuspendingOperation.GetDeferral();
 
             applicationLogicAgent.OnSuspending();
-            views.ForEach(item => item.RiseSuspending());
             deferral.Complete();
         }
 
         private void OnResument(object sender, object e)
         {
             applicationLogicAgent.OnResument();
-            views.ForEach(item => item.RiseResument());
         }
 
         void App_EnteredBackground(object sender, EnteredBackgroundEventArgs e)
         {
             isInBackgroundMode = true;
             applicationLogicAgent.OnEnteredBackground();
-            views.ForEach(item => item.RiseEnteredBackground());
         }
 
         async void App_LeavingBackground(object sender, LeavingBackgroundEventArgs e)
@@ -115,7 +112,6 @@ namespace Tampleworks.WindowsApplicationBlock.ApplicationLogicEnvironment
             applicationLogicAgent.OnLeavingBackground();
 
             await InitAllViews();
-            views.ForEach(item => item.RiseLeavingBackground());
         }
 
         internal async Task InitAllViews()
